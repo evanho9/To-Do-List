@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 public class CalendarFrame extends JFrame {
-	
+	//testing if im connected
 	private JPanel headerPanel;
 	private JPanel mainPanel;
 	private JPanel footerPanel;
