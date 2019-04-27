@@ -17,16 +17,19 @@ public class CalendarFrame extends JFrame {
 	private JPanel headerPanel;
 	private JPanel mainPanel;
 	private JPanel footerPanel;
+	private ToDoListFrame t;
 	
 	private final static Dimension FRAME_DIMENSION = new Dimension(500,500);
 	
 	public CalendarFrame() {
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
+		setTitle("Calendar Frame");
 		
 		initHeader();
 		initTaskList();
 		initFooter();
+		connectToDoListFrame();
 		endOperations();
 	}
 
@@ -64,6 +67,11 @@ public class CalendarFrame extends JFrame {
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		setLocationRelativeTo(t);
+	}
+	
+	private void connectToDoListFrame() {
+		ToDoListFrame t = new ToDoListFrame();
 	}
 	
 	public static void main(String[] args) {

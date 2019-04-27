@@ -25,6 +25,7 @@ public class ToDoListFrame extends JFrame {
 	public ToDoListFrame() {
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
+		setTitle("To-Do List");
 		
 		initHeader();
 		initTaskList();
