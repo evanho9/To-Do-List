@@ -74,7 +74,6 @@ public class ToDoListFrame extends JFrame {
 		
 		
 		mainPanel.add(taskScrollPane);
-		mainPanel.setPreferredSize(new Dimension(FRAME_DIMENSION.width-50, 7*FRAME_DIMENSION.height/10));
 		add(mainPanel, BorderLayout.CENTER);
 	}
 	
@@ -122,10 +121,5 @@ public class ToDoListFrame extends JFrame {
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-	}
-	
-	public static void main(String[] args) {
-		ToDoListFrame f = new ToDoListFrame();
-		
 	}
 }
