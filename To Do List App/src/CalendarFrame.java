@@ -163,7 +163,7 @@ public class CalendarFrame extends JFrame {
 			mainPanel.add(dayLabel);
 		}
 		
-		GregorianCalendar cal = new GregorianCalendar(year-1, month-1, 1);
+		GregorianCalendar cal = new GregorianCalendar(year, month-1, 1);
 		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		int startingDayOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
 
