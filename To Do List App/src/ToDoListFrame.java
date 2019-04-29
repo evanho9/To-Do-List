@@ -126,6 +126,6 @@ public class ToDoListFrame extends JFrame {
 	}
 	
 	public void goToDate(int day, int month, int year) {
-			System.out.println("Reached day " + day + " month " + month + " year "+ year);
+		System.out.println("Reached day " + day + " month " + month + " year "+ year);
 	}
 }
