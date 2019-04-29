@@ -15,11 +15,9 @@ public class ToDoList {
 		days.add(d);
 	}
 	
-	public Day getDay(String day, String month, String year) {
+	public Day getDay(int day, int month, int year) {
 		for(Day d : days) {
-			if(d.getDay().equals(day) && 
-					d.getMonth().equals(month) &&
-					d.getYear().equals(year))
+			if(d.getDay() == day && d.getMonth() == month && d.getYear() == year)
 				return d;
 		}
 		return null;

@@ -1,25 +1,25 @@
 import java.util.ArrayList;
 
 public class Day {
-	private ArrayList<String> tasks;
-	private String day, month, year;
+	private ArrayList<Task> tasks;
+	private int day, month, year;
 	
-	public Day (String day, String month, String year) {
+	public Day (int day, int month, int year) {
 		tasks = new ArrayList<>();
 		this.day = day;
 		this.month = month;
 		this.year = year;
 	}
 	
-	public ArrayList<String> getTasks() {
+	public ArrayList<Task> getTasks() {
 		return tasks;
 	}
 	
-	public void addTask(String s) {
+	public void addTask(Task s) {
 		tasks.add(s);
 	}
 	
-	public String getTask(int index) {
+	public Task getTask(int index) {
 		return tasks.get(index);	
 	}
 	
@@ -28,15 +28,15 @@ public class Day {
 			tasks.remove(t);
 	}
 	
-	public String getDay() {
+	public int getDay() {
 		return day;
 	}
 	
-	public String getMonth() { 
+	public int getMonth() { 
 		return month;
 	}
 	
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
 	

@@ -21,16 +21,19 @@ public class CalendarFrame extends JFrame {
 	private JLabel dateLabel;
 	private JButton selected;
 	
+	private final Dimension FRAME_DIMENSION;
+	
 	private ToDoListFrame t;
 	
-	private int currentYear, currentMonth, currentDay;
+	private int currentYear, currentMonth, currentDay;	
 	
-	private final static Dimension FRAME_DIMENSION = new Dimension(500,500);
-	
-	public CalendarFrame() {
+	public CalendarFrame(Dimension frameDimension) {
+		FRAME_DIMENSION = frameDimension;
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
 		setTitle("Calendar Frame");
+		
+		t = new ToDoListFrame(FRAME_DIMENSION);
 		
 		initHeader();
 		initCalendarView();
@@ -113,6 +116,7 @@ public class CalendarFrame extends JFrame {
 					dayButton.setBackground(Color.RED);
 					dateLabel.setText("Date: " + (currentMonth+1) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
+					t.update(currentDay, currentMonth, currentYear);
 				});
 				if (i == currentDay) {
 					selected = dayButton;
@@ -174,6 +178,7 @@ public class CalendarFrame extends JFrame {
 					dayButton.setBackground(Color.RED);
 					dateLabel.setText("Date: " + (currentMonth+1) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
+					t.update(currentDay, currentMonth, currentYear);
 				});
 				if (i == currentDay) {
 					selected = dayButton;
@@ -192,9 +197,5 @@ public class CalendarFrame extends JFrame {
 		}
 		dateLabel.setText("Date: " + (currentMonth+1) + "/" + (currentDay+1) + "/" + (currentYear));
 		mainPanel.repaint();
-	}
-	
-	public void connectToDoListFrame(ToDoListFrame toDoListFrame) {
-		t = toDoListFrame;
 	}
 }
