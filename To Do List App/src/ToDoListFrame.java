@@ -19,6 +19,7 @@ public class ToDoListFrame extends JFrame {
 	private JPanel headerPanel;
 	private JPanel mainPanel;
 	private JPanel footerPanel;
+	private ToDoList tdList;
 	
 	private final static Dimension FRAME_DIMENSION = new Dimension(500,500);
 	
@@ -26,6 +27,7 @@ public class ToDoListFrame extends JFrame {
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
 		setTitle("To-Do List");
+		tdList = new ToDoList();
 		
 		initHeader();
 		initTaskList();
@@ -121,5 +123,9 @@ public class ToDoListFrame extends JFrame {
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+	
+	public void goToDate(int day, int month, int year) {
+			System.out.println("Reached day " + day + " month " + month + " year "+ year);
 	}
 }

@@ -53,9 +53,12 @@ public class CalendarFrame extends JFrame {
 		while (i < 35) {
 			if (i < daysInMonth) {
 				JButton dayButton = new JButton(Integer.toString(i+1));
+				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
 				dayButton.addActionListener(event -> {
-					
+					t.goToDate(currentDayOfButton, currentMonth, currentYear);
+					dateLabel.setText("Date: " + (currentMonth+1) + "/" 
+					+ (currentDayOfButton) + "/" + (currentYear+1));
 				});
 				if (i == currentDay)
 					dayButton.setBackground(Color.RED);
@@ -140,9 +143,12 @@ public class CalendarFrame extends JFrame {
 		while (i < 35) {
 			if (i < daysInMonth) {
 				JButton dayButton = new JButton(Integer.toString(i+1));
+				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
 				dayButton.addActionListener(event -> {
-					
+					t.goToDate(currentDayOfButton, currentMonth, currentYear);
+					dateLabel.setText("Date: " + (realMonth+1) + "/" 
+					+ (currentDayOfButton) + "/" + (realYear+1));
 				});
 				if (i == currentDay)
 					dayButton.setBackground(Color.RED);
