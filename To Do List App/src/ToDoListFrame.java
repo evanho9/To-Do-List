@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -18,6 +19,7 @@ import javax.swing.SwingConstants;
 public class ToDoListFrame extends JFrame {
 	
 	private JPanel headerPanel;
+	private JLabel dateLabel;
 	private JPanel mainPanel;
 	private JList taskList;
 	private JScrollPane taskScrollPane;
@@ -30,7 +32,7 @@ public class ToDoListFrame extends JFrame {
 	
 	private int currentYear, currentMonth, currentDay;
 	
-	public ToDoListFrame(Dimension frameDimension) {
+	public ToDoListFrame(int realDay, int realMonth, int realYear, Dimension frameDimension) {
 		FRAME_DIMENSION = frameDimension;
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
@@ -48,10 +50,12 @@ public class ToDoListFrame extends JFrame {
 		headerPanel.setBackground(Color.GRAY);
 		headerPanel.setLayout(new FlowLayout());
 		
-		JLabel dateSelectedLabel = new JLabel("Date: ");
-		dateSelectedLabel.setForeground(Color.WHITE);
+		dateLabel = new JLabel("Date: ");
+		dateLabel.setText("Date: " + (currentMonth) + "/" 
+				+ (currentDay) + "/" + (currentYear));
+		dateLabel.setForeground(Color.WHITE);
 		
-		headerPanel.add(dateSelectedLabel);
+		headerPanel.add(dateLabel);
 		headerPanel.setPreferredSize(new Dimension(FRAME_DIMENSION.width-50, FRAME_DIMENSION.height/15));
 		add(headerPanel, BorderLayout.NORTH);
 	}
@@ -61,19 +65,6 @@ public class ToDoListFrame extends JFrame {
 		mainPanel.setBackground(Color.GRAY);
 		mainPanel.setLayout(new FlowLayout());
 		
-		final DefaultListModel taskNames = new DefaultListModel();
-		
-		/*
-		taskNames.addElement("task1name");
-		taskNames.addElement("task2name");
-		taskNames.addElement("task3name");
-		taskNames.addElement("task4name");
-		taskNames.addElement("task5name");
-		taskNames.addElement("task6name");
-		taskNames.addElement("task7name");
-		taskNames.addElement("task8name");
-		*/
-		
 		taskList = new JList();
 		taskList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		taskList.setSelectedIndex(0);
@@ -81,7 +72,6 @@ public class ToDoListFrame extends JFrame {
 		
 		taskScrollPane = new JScrollPane(taskList);
 		taskScrollPane.setPreferredSize(new Dimension(FRAME_DIMENSION.width-50, 8*FRAME_DIMENSION.height/10));
-		
 		
 		mainPanel.add(taskScrollPane);
 		add(mainPanel, BorderLayout.CENTER);
@@ -92,7 +82,7 @@ public class ToDoListFrame extends JFrame {
 		footerPanel.setBackground(Color.GRAY);
 		footerPanel.setLayout(new BorderLayout());
 		
-		JTextField textField = new JTextField("Type here");
+		JTextField textField = new JTextField("");
 		//textField.setBackground(Color.WHITE);
 		//textField.setPreferredSize(new Dimension(FRAME_DIMENSION.width -50, FRAME_DIMENSION.height/10));
 		
@@ -114,17 +104,11 @@ public class ToDoListFrame extends JFrame {
 		addButton.setBackground(Color.WHITE);
 		//addButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		addButton.addActionListener(event -> {
-			Day day = tdList.getDay(currentDay, currentMonth, currentYear);
-			if (day != null) {
-				Task task = new Task(textField.getText());
-				day.addTask(task);
-				System.out.println("added task: " + textField.getText());
-			} else {
-				Day newDay = new Day(currentDay, currentMonth, currentYear);
-				Task task = new Task(textField.getText());
-				newDay.addTask(task);
-				System.out.println("added task: " + textField.getText());
-			}
+			
+			Task task = new Task(currentDay, currentMonth, currentYear, textField.getText());
+			textField.setText("");
+			tdList.addTask(task);
+
 			update(currentDay, currentMonth, currentYear);
 		});
 		
@@ -157,16 +141,16 @@ public class ToDoListFrame extends JFrame {
 	}
 	
 	public void update(int currentDay, int currentMonth, int currentYear) {
-		Day day = tdList.getDay(currentDay, currentMonth, currentYear);
+		dateLabel.setText("Date: " + (currentMonth) + "/" 
+				+ (currentDay) + "/" + (currentYear));
+		ArrayList<Task> tasksOnCurrentDay = tdList.getTasksOnDay(currentDay, currentMonth, currentYear);
 		
 		final DefaultListModel taskNames = new DefaultListModel();
-		if (day != null) {
-			for (Task t : day.getTasks()) {
-				taskNames.addElement(t.getTask());
-			}
-		} else {
-			
-		}
+		
+		for (Task t : tasksOnCurrentDay) {
+			taskNames.addElement(t.getTask());
+		} 
+		
 		taskList.setModel(taskNames);
 		taskScrollPane.repaint();
 	}
@@ -175,6 +159,7 @@ public class ToDoListFrame extends JFrame {
 		currentDay = day;
 		currentMonth = month;
 		currentYear = year;
+		update(currentDay, currentMonth, currentYear);
 		System.out.println("Reached day: " + day + ", month: " + month + ", year: "+ year);
 	}
 }

@@ -33,10 +33,19 @@ public class CalendarFrame extends JFrame {
 		setLayout(new BorderLayout());
 		setTitle("Calendar Frame");
 		
-		t = new ToDoListFrame(FRAME_DIMENSION);
+		GregorianCalendar cal = new GregorianCalendar();
+		int realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
+		int realMonth = cal.get(GregorianCalendar.MONTH);
+		int realYear = cal.get(GregorianCalendar.YEAR); 
+		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
+		currentDay = realDay+1;
+		currentMonth = realMonth+1;
+		currentYear = realYear;
+		
+		t = new ToDoListFrame(realDay, realMonth, realYear, FRAME_DIMENSION);
 		
 		initHeader();
-		initCalendarView();
+		initCalendarView(daysInMonth);
 		initFooter();
 		endOperations();
 	}
@@ -54,28 +63,30 @@ public class CalendarFrame extends JFrame {
 		
 		JButton forwardMonth = new JButton("-->");
 		forwardMonth.addActionListener(event -> {
-			if (currentMonth == 11) {
-				currentMonth = 0;
+			if (currentMonth == 12) {
+				currentMonth = 1;
 				currentYear++;
-				currentDay = 0;
+				currentDay = 1;
 			} else {
 				currentMonth++;
-				currentDay = 0;
+				currentDay = 1;
 			}
+			t.update(currentDay, currentMonth, currentYear);
 			refreshCalendar(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
 		
 		JButton previousMonth = new JButton("<--");
 		previousMonth.addActionListener(event -> {
-			if (currentMonth == 0) {
-				currentMonth = 11;
+			if (currentMonth == 1) {
+				currentMonth = 12;
 				currentYear--;
-				currentDay = 0;
+				currentDay = 1;
 			} else {
 				currentMonth--;
-				currentDay = 0;
+				currentDay = 1;
 			}
+			t.update(currentDay, currentMonth, currentYear);
 			refreshCalendar(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(previousMonth, BorderLayout.WEST);
@@ -83,7 +94,7 @@ public class CalendarFrame extends JFrame {
 		add(headerPanel, BorderLayout.NORTH);
 	}
 
-	private void initCalendarView() {
+	private void initCalendarView(int daysInMonth) {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(6, 7));
 		mainPanel.setBackground(Color.WHITE);
@@ -93,20 +104,11 @@ public class CalendarFrame extends JFrame {
 			JLabel dayLabel = new JLabel(day);
 			mainPanel.add(dayLabel);
 		}
-		
-		GregorianCalendar cal = new GregorianCalendar();
-		int realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
-		int realMonth = cal.get(GregorianCalendar.MONTH);
-		int realYear = cal.get(GregorianCalendar.YEAR); 
-		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
-		currentDay = realDay;
-		currentMonth = realMonth;
-		currentYear = realYear;
 
-		int i = 0;
-		while (i < 35) {
+		int i = 1;
+		while (i <= 35) {
 			if (i < daysInMonth) {
-				JButton dayButton = new JButton(Integer.toString(i+1));
+				JButton dayButton = new JButton(Integer.toString(i));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
 				dayButton.addActionListener(event -> {
@@ -114,11 +116,10 @@ public class CalendarFrame extends JFrame {
 					selected.setBackground(Color.WHITE);
 					selected = dayButton;
 					dayButton.setBackground(Color.RED);
-					dateLabel.setText("Date: " + (currentMonth+1) + "/" 
+					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
-					t.update(currentDay, currentMonth, currentYear);
 				});
-				if (i == currentDay) {
+				if (i == currentDay-1) {
 					selected = dayButton;
 					dayButton.setBackground(Color.RED);
 				}
@@ -134,7 +135,7 @@ public class CalendarFrame extends JFrame {
 			i++;
 		}
 		add(mainPanel, BorderLayout.CENTER);
-		dateLabel.setText("Date: " + (realMonth+1) + "/" + (realDay+1) + "/" + (realYear));
+		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
 	}
 	
 	private void initFooter() {
@@ -146,6 +147,7 @@ public class CalendarFrame extends JFrame {
 	}
 	
 	private void endOperations() {
+		t.goToDate(currentDay, currentMonth, currentYear);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -161,14 +163,14 @@ public class CalendarFrame extends JFrame {
 			mainPanel.add(dayLabel);
 		}
 		
-		GregorianCalendar cal = new GregorianCalendar(year, month, 1);
+		GregorianCalendar cal = new GregorianCalendar(year-1, month-1, 1);
 		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
 		int startingDayOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
 
-		int i = 0;
-		while (i < 35) {
-			if (i < daysInMonth) {
-				JButton dayButton = new JButton(Integer.toString(i+1));
+		int i = 1;
+		while (i <= 35) {
+			if (i <= daysInMonth) {
+				JButton dayButton = new JButton(Integer.toString(i));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
 				dayButton.addActionListener(event -> {
@@ -176,9 +178,8 @@ public class CalendarFrame extends JFrame {
 					selected.setBackground(Color.WHITE);
 					selected = dayButton;
 					dayButton.setBackground(Color.RED);
-					dateLabel.setText("Date: " + (currentMonth+1) + "/" 
+					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
-					t.update(currentDay, currentMonth, currentYear);
 				});
 				if (i == currentDay) {
 					selected = dayButton;
@@ -195,7 +196,7 @@ public class CalendarFrame extends JFrame {
 			}
 			i++;
 		}
-		dateLabel.setText("Date: " + (currentMonth+1) + "/" + (currentDay+1) + "/" + (currentYear));
+		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
 		mainPanel.repaint();
 	}
 }

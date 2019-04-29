@@ -1,30 +1,32 @@
 import java.util.ArrayList;
 
 public class ToDoList {
-	private ArrayList<Day> days;
+	private ArrayList<Task> tasks;
 	
 	public ToDoList() {
-		days = new ArrayList<>();
+		tasks = new ArrayList<>();
 	}
 	
-	public ArrayList<Day> getDays() {
-		return days;
+	public ArrayList<Task> getTasks() {
+		return tasks;
 	}
 	
-	public void addDay(Day d) {
-		days.add(d);
+	public void addTask(Task t) {
+		tasks.add(t);
 	}
 	
-	public Day getDay(int day, int month, int year) {
-		for(Day d : days) {
-			if(d.getDay() == day && d.getMonth() == month && d.getYear() == year)
-				return d;
+	public ArrayList<Task> getTasksOnDay(int day, int month, int year) {
+		ArrayList<Task> result = new ArrayList<>();
+		for(Task t : tasks) {
+			System.out.println(t);
+			if(t.getDay() == day && t.getMonth() == month && t.getYear() == year)
+				result.add(t);
 		}
-		return null;
+		return result;
 	}
 	
-	public void removeDay(Day d) {
-		if(days.contains(d))
-			days.remove(d);
+	public void removeTask(Task t) {
+		if (tasks.contains(t))
+			tasks.remove(t);
 	}
 }
