@@ -45,8 +45,8 @@ public class CalendarFrame extends JFrame {
 		t = new ToDoListFrame(realDay, realMonth, realYear, FRAME_DIMENSION);
 		
 		initHeader();
-		initCalendarView(daysInMonth);
 		initFooter();
+		initCalendarView(daysInMonth);
 		endOperations();
 	}
 
@@ -54,12 +54,6 @@ public class CalendarFrame extends JFrame {
 		headerPanel = new JPanel();
 		headerPanel.setLayout(new BorderLayout());
 		headerPanel.setBackground(Color.GRAY);
-		
-		dateLabel = new JLabel("Date: ");
-		dateLabel.setHorizontalAlignment(JLabel.CENTER);
-		dateLabel.setForeground(Color.WHITE);
-		
-		headerPanel.add(dateLabel, BorderLayout.CENTER);
 		
 		JButton forwardMonth = new JButton("-->");
 		forwardMonth.addActionListener(event -> {
@@ -142,7 +136,15 @@ public class CalendarFrame extends JFrame {
 		footerPanel = new JPanel();
 		footerPanel.setLayout(new FlowLayout());
 		footerPanel.setBackground(Color.GRAY);
+		
+		dateLabel = new JLabel("Date: ");
+		dateLabel.setHorizontalAlignment(JLabel.CENTER);
+		dateLabel.setForeground(Color.WHITE);
+		
+		footerPanel.add(dateLabel, BorderLayout.CENTER);
 
+
+		
 		add(footerPanel, BorderLayout.SOUTH);
 	}
 	
