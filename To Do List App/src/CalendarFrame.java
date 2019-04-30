@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
@@ -22,6 +24,7 @@ public class CalendarFrame extends JFrame {
 	private JPanel headerPanel, mainPanel, footerPanel, centerPanel, buttonPanel;
 	private JLabel dateLabel, monthLabel;
 	private JButton selected;
+	private JComboBox<Integer> yearSelector;
 	
 	private final Dimension FRAME_DIMENSION;
 	
@@ -60,6 +63,7 @@ public class CalendarFrame extends JFrame {
 		headerPanel.setLayout(new BorderLayout());
 		headerPanel.setBackground(Color.GRAY);
 		
+		//TODO Create listener for dropdown menu for year selector
 		initCenterPanel();
 		initButtonPanel();
 		centerPanel.add(buttonPanel);
@@ -67,7 +71,7 @@ public class CalendarFrame extends JFrame {
 		headerPanel.add(centerPanel, BorderLayout.CENTER);
 
 		
-		JButton forwardMonth = new JButton("-->");
+		JButton forwardMonth = new JButton("Next Month -->");
 		forwardMonth.addActionListener(event -> {
 			if (currentMonth == 12) {
 				currentMonth = 1;
@@ -82,7 +86,7 @@ public class CalendarFrame extends JFrame {
 		});
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
 		
-		JButton previousMonth = new JButton("<--");
+		JButton previousMonth = new JButton("<-- Prev. Month");
 		previousMonth.addActionListener(event -> {
 			if (currentMonth == 1) {
 				currentMonth = 12;
@@ -99,6 +103,55 @@ public class CalendarFrame extends JFrame {
 		
 		
 		add(headerPanel, BorderLayout.NORTH);
+	}
+	
+	
+	private void initCenterPanel() {
+		centerPanel = new JPanel();
+		centerPanel.setLayout(new FlowLayout());
+		
+		monthLabel = new JLabel(getMonth(currentMonth));
+		centerPanel.add(monthLabel);
+		
+		yearSelector = new JComboBox<>();
+		for(int i = 1583; i <= 3000; i++) {
+			yearSelector.addItem(i);
+		}
+		centerPanel.add(yearSelector);
+		//need to add listener to see what the years selects
+		
+		yearSelector.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				JComboBox<Integer> combo = (JComboBox<Integer>) event.getSource();
+				currentYear = (int) combo.getSelectedItem();
+				
+				t.update(currentDay, currentMonth, currentYear);
+				refreshCalendar(currentDay, currentMonth, currentYear);
+			}
+		}
+		);
+	}
+	
+	private void initButtonPanel() {
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+		
+		JButton forwardYear = new JButton("Λ (+1 Year)");
+		forwardYear.addActionListener(event -> {
+			currentYear++;
+			t.update(currentDay, currentMonth, currentYear);
+			refreshCalendar(currentDay, currentMonth, currentYear);
+		});
+		
+		JButton previousYear = new JButton("V (-1 Year)");
+		previousYear.addActionListener(event -> {
+			currentYear--;
+			t.update(currentDay, currentMonth, currentYear);
+			refreshCalendar(currentDay, currentMonth, currentYear);
+		});
+		
+		buttonPanel.add(forwardYear);
+		buttonPanel.add(previousYear);
 	}
 
 	private void initCalendarView(int daysInMonth) {
@@ -144,6 +197,7 @@ public class CalendarFrame extends JFrame {
 		add(mainPanel, BorderLayout.CENTER);
 		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
 		monthLabel.setText(getMonth(currentMonth));
+		yearSelector.setSelectedItem(currentYear);
 	}
 	
 	private void initFooter() {
@@ -211,45 +265,8 @@ public class CalendarFrame extends JFrame {
 		}
 		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
 		monthLabel.setText(getMonth(currentMonth));
+		yearSelector.setSelectedItem(currentYear);
 		mainPanel.repaint();
-	}
-	
-	private void initCenterPanel() {
-		centerPanel = new JPanel();
-		centerPanel.setLayout(new FlowLayout());
-		
-		monthLabel = new JLabel(getMonth(currentMonth));
-		centerPanel.add(monthLabel);
-		
-		JComboBox<Integer> yearsToSelect = new JComboBox<>();
-		yearsToSelect.addItem(2010);
-		yearsToSelect.addItem(2019);
-		yearsToSelect.addItem(2020);
-		centerPanel.add(yearsToSelect);
-		//need to add listener to see what the years selects
-
-	}
-	
-	private void initButtonPanel() {
-		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-		
-		JButton forwardYear = new JButton("^");
-		forwardYear.addActionListener(event -> {
-			currentYear++;
-			t.update(currentDay, currentMonth, currentYear);
-			refreshCalendar(currentDay, currentMonth, currentYear);
-		});
-		
-		JButton previousYear = new JButton("V");
-		previousYear.addActionListener(event -> {
-			currentYear--;
-			t.update(currentDay, currentMonth, currentYear);
-			refreshCalendar(currentDay, currentMonth, currentYear);
-		});
-		
-		buttonPanel.add(forwardYear);
-		buttonPanel.add(previousYear);
 	}
 	
 	private String getMonth(int index) {
