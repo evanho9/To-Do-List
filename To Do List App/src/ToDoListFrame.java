@@ -90,7 +90,15 @@ public class ToDoListFrame extends JFrame {
 		deleteButton.setBackground(Color.WHITE);
 		//deleteButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		deleteButton.addActionListener(event -> {
+			try {
+				int currentSelected = taskList.getSelectedIndex();
+				tdList.removeTask(currentSelected);
+			}
+			catch (Exception e) {
+				//If nothing selected dont throw any errors.
+			}
 			
+			update(currentDay, currentMonth,currentYear);
 		});
 		
 		JButton editButton = new JButton("Edit");
