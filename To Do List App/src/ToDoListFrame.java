@@ -86,11 +86,11 @@ public class ToDoListFrame extends JFrame {
 		
 		textField = new JTextField("");
 		//textField.setBackground(Color.WHITE);
-		//textField.setPreferredSize(new Dimension(FRAME_DIMENSION.width -50, FRAME_DIMENSION.height/10));
+		textField.setPreferredSize(new Dimension(FRAME_DIMENSION.width -50, FRAME_DIMENSION.height/20));
 		
 		JButton deleteButton = new JButton("Delete");
 		deleteButton.setBackground(Color.WHITE);
-		//deleteButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
+		deleteButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		deleteButton.addActionListener(event -> {
 			try {
 				int currentSelected = taskList.getSelectedIndex();
@@ -105,12 +105,13 @@ public class ToDoListFrame extends JFrame {
 		
 		JButton editButton = new JButton("Edit");
 		editButton.setBackground(Color.WHITE);
-		//editButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
+		editButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		editButton.addActionListener(event -> {
 			try {
 				int currentSelected = taskList.getSelectedIndex();
 				Task newTask = new Task(currentDay, currentMonth, currentYear, textField.getText());
 				tdList.editTask(currentSelected, newTask);
+				textField.setText("");
 			}
 			catch (Exception e) {
 				//If nothing is selected don't throw any errors.
@@ -121,7 +122,7 @@ public class ToDoListFrame extends JFrame {
 		
 		JButton addButton = new JButton("Add");
 		addButton.setBackground(Color.WHITE);
-		//addButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
+		addButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		addButton.addActionListener(event -> {
 			
 			Task task = new Task(currentDay, currentMonth, currentYear, textField.getText());
@@ -133,14 +134,17 @@ public class ToDoListFrame extends JFrame {
 		
 		JButton exportButton = new JButton("Export");
 		exportButton.setBackground(Color.WHITE);
-		//exportButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
+		exportButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		exportButton.addActionListener(event -> {
 			System.out.println("export");
 		});
 		
 		
-		
-		footerPanel.add(textField, BorderLayout.NORTH);
+		JPanel textFieldPanel = new JPanel();
+		textFieldPanel.setBackground(Color.GRAY);
+		textFieldPanel.setLayout(new FlowLayout());
+		textFieldPanel.add(textField);
+		footerPanel.add(textFieldPanel, BorderLayout.NORTH);
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.GRAY);
 		buttonPanel.setLayout(new FlowLayout());
