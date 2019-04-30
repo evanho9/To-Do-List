@@ -118,15 +118,15 @@ public class CalendarFrame extends JFrame {
 			yearSelector.addItem(i);
 		}
 		centerPanel.add(yearSelector);
-		//need to add listener to see what the years selects
 		
 		yearSelector.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				JComboBox<Integer> combo = (JComboBox<Integer>) event.getSource();
-				currentYear = (int) combo.getSelectedItem();
-				
-				t.update(currentDay, currentMonth, currentYear);
-				refreshCalendar(currentDay, currentMonth, currentYear);
+				if(currentYear != (int) combo.getSelectedItem()) {
+					currentYear = (int) combo.getSelectedItem();
+					t.update(currentDay, currentMonth, currentYear);
+					refreshCalendar(currentDay, currentMonth, currentYear);
+				}
 			}
 		}
 		);
