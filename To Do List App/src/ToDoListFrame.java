@@ -24,6 +24,7 @@ public class ToDoListFrame extends JFrame {
 	private JList taskList;
 	private JScrollPane taskScrollPane;
 	private JPanel footerPanel;
+	private JTextField textField;
 	
 	
 	private final Dimension FRAME_DIMENSION;
@@ -43,6 +44,7 @@ public class ToDoListFrame extends JFrame {
 		initTaskList();
 		initFooter();
 		endOperations();
+		//selectedTask();
 	}
 
 	private void initHeader() {
@@ -82,7 +84,7 @@ public class ToDoListFrame extends JFrame {
 		footerPanel.setBackground(Color.GRAY);
 		footerPanel.setLayout(new BorderLayout());
 		
-		JTextField textField = new JTextField("");
+		textField = new JTextField("");
 		//textField.setBackground(Color.WHITE);
 		//textField.setPreferredSize(new Dimension(FRAME_DIMENSION.width -50, FRAME_DIMENSION.height/10));
 		
@@ -95,7 +97,7 @@ public class ToDoListFrame extends JFrame {
 				tdList.removeTask(currentSelected);
 			}
 			catch (Exception e) {
-				//If nothing selected dont throw any errors.
+				//If nothing selected don't throw any errors.
 			}
 			
 			update(currentDay, currentMonth,currentYear);
@@ -105,7 +107,16 @@ public class ToDoListFrame extends JFrame {
 		editButton.setBackground(Color.WHITE);
 		//editButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		editButton.addActionListener(event -> {
+			try {
+				int currentSelected = taskList.getSelectedIndex();
+				Task newTask = new Task(currentDay, currentMonth, currentYear, textField.getText());
+				tdList.editTask(currentSelected, newTask);
+			}
+			catch (Exception e) {
+				//If nothing is selected don't throw any errors.
+			}
 			
+			update(currentDay, currentMonth,currentYear);
 		});
 		
 		JButton addButton = new JButton("Add");
@@ -170,4 +181,22 @@ public class ToDoListFrame extends JFrame {
 		update(currentDay, currentMonth, currentYear);
 		System.out.println("Reached day: " + day + ", month: " + month + ", year: "+ year);
 	}
+	
+	public void selectedTask() {
+		boolean running = true;
+		while (running) {
+			try {
+				int currentSelected = taskList.getSelectedIndex();
+				String currentTask = tdList.getTaskAtIndex(currentSelected).getTask();
+				System.out.println("Currently selected : " + currentTask);
+				textField.setText(currentTask);
+				update(currentDay, currentMonth,currentYear);
+				}
+			catch (Exception e) {
+				//If nothing is selected don't throw an error.
+			}
+		}
+	}
+	
+	
 }

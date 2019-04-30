@@ -32,4 +32,8 @@ public class ToDoList {
 	public Task getTaskAtIndex(int index) {
 		return tasks.get(index);
 	}
+	
+	public void editTask(int index, Task newTask) {
+		tasks.set(index, newTask);
+	}
 }
