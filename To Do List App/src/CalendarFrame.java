@@ -6,8 +6,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.GregorianCalendar;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -17,8 +19,8 @@ import javax.swing.ListSelectionModel;
 
 public class CalendarFrame extends JFrame {
 	
-	private JPanel headerPanel, mainPanel, footerPanel;
-	private JLabel dateLabel;
+	private JPanel headerPanel, mainPanel, footerPanel, centerPanel, buttonPanel;
+	private JLabel dateLabel, monthLabel;
 	private JButton selected;
 	
 	private final Dimension FRAME_DIMENSION;
@@ -26,6 +28,9 @@ public class CalendarFrame extends JFrame {
 	private ToDoListFrame t;
 	
 	private int currentYear, currentMonth, currentDay;	
+	private String[] months = {"January", "February", "March", "April", "May", "June",
+			"July", "August", "September", "October", "November", "December"};
+
 	
 	public CalendarFrame(Dimension frameDimension) {
 		FRAME_DIMENSION = frameDimension;
@@ -54,6 +59,13 @@ public class CalendarFrame extends JFrame {
 		headerPanel = new JPanel();
 		headerPanel.setLayout(new BorderLayout());
 		headerPanel.setBackground(Color.GRAY);
+		
+		initCenterPanel();
+		initButtonPanel();
+		centerPanel.add(buttonPanel);
+		
+		headerPanel.add(centerPanel, BorderLayout.CENTER);
+
 		
 		JButton forwardMonth = new JButton("-->");
 		forwardMonth.addActionListener(event -> {
@@ -84,6 +96,7 @@ public class CalendarFrame extends JFrame {
 			refreshCalendar(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(previousMonth, BorderLayout.WEST);
+		
 		
 		add(headerPanel, BorderLayout.NORTH);
 	}
@@ -130,6 +143,7 @@ public class CalendarFrame extends JFrame {
 		}
 		add(mainPanel, BorderLayout.CENTER);
 		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
+		monthLabel.setText(getMonth(currentMonth));
 	}
 	
 	private void initFooter() {
@@ -138,12 +152,9 @@ public class CalendarFrame extends JFrame {
 		footerPanel.setBackground(Color.GRAY);
 		
 		dateLabel = new JLabel("Date: ");
-		dateLabel.setHorizontalAlignment(JLabel.CENTER);
 		dateLabel.setForeground(Color.WHITE);
 		
-		footerPanel.add(dateLabel, BorderLayout.CENTER);
-
-
+		footerPanel.add(dateLabel);
 		
 		add(footerPanel, BorderLayout.SOUTH);
 	}
@@ -199,6 +210,49 @@ public class CalendarFrame extends JFrame {
 			i++;
 		}
 		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
+		monthLabel.setText(getMonth(currentMonth));
 		mainPanel.repaint();
+	}
+	
+	private void initCenterPanel() {
+		centerPanel = new JPanel();
+		centerPanel.setLayout(new FlowLayout());
+		
+		monthLabel = new JLabel(getMonth(currentMonth));
+		centerPanel.add(monthLabel);
+		
+		JComboBox<Integer> yearsToSelect = new JComboBox<>();
+		yearsToSelect.addItem(2010);
+		yearsToSelect.addItem(2019);
+		yearsToSelect.addItem(2020);
+		centerPanel.add(yearsToSelect);
+		//need to add listener to see what the years selects
+
+	}
+	
+	private void initButtonPanel() {
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+		
+		JButton forwardYear = new JButton("^");
+		forwardYear.addActionListener(event -> {
+			currentYear++;
+			t.update(currentDay, currentMonth, currentYear);
+			refreshCalendar(currentDay, currentMonth, currentYear);
+		});
+		
+		JButton previousYear = new JButton("V");
+		previousYear.addActionListener(event -> {
+			currentYear--;
+			t.update(currentDay, currentMonth, currentYear);
+			refreshCalendar(currentDay, currentMonth, currentYear);
+		});
+		
+		buttonPanel.add(forwardYear);
+		buttonPanel.add(previousYear);
+	}
+	
+	private String getMonth(int index) {
+		return months[index-1];
 	}
 }
