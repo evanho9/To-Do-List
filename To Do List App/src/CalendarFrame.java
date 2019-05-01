@@ -47,7 +47,7 @@ public class CalendarFrame extends JFrame {
 		int realMonth = cal.get(GregorianCalendar.MONTH);
 		int realYear = cal.get(GregorianCalendar.YEAR); 
 		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
-		currentDay = realDay+1;
+		currentDay = realDay;
 		currentMonth = realMonth+1;
 		currentYear = realYear;
 		
@@ -183,7 +183,6 @@ public class CalendarFrame extends JFrame {
 				dayButton.setBorderPainted(false);
 				dayButton.setOpaque(true);
 				dayButton.addActionListener(event -> {
-					t.goToDate(currentDayOfButton, currentMonth, currentYear);
 					selected.setBackground(Color.WHITE);
 					selected = dayButton;
 					dayButton.setBackground(Color.CYAN);
@@ -229,7 +228,6 @@ public class CalendarFrame extends JFrame {
 	}
 	
 	private void endOperations() {
-		t.goToDate(currentDay, currentMonth, currentYear);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -260,7 +258,6 @@ public class CalendarFrame extends JFrame {
 				dayButton.setBorderPainted(false);
 				dayButton.setOpaque(true);
 				dayButton.addActionListener(event -> {
-					t.goToDate(currentDayOfButton, currentMonth, currentYear);
 					selected.setBackground(Color.WHITE);
 					selected = dayButton;
 					dayButton.setBackground(Color.CYAN);

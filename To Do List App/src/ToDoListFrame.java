@@ -187,6 +187,10 @@ public class ToDoListFrame extends JFrame {
 	}
 	
 	public void update(int currentDay, int currentMonth, int currentYear) {
+		this.currentDay = currentDay;
+		this.currentMonth = currentMonth;
+		this.currentYear = currentYear;
+		
 		dateLabel.setText("Date: " + (currentMonth) + "/" 
 				+ (currentDay) + "/" + (currentYear));
 		ArrayList<Task> tasksOnCurrentDay = tdList.getTasksOnDay(currentDay, currentMonth, currentYear);
