@@ -169,7 +169,7 @@ public class CalendarFrame extends JFrame {
 
 	private void initCalendarView(int daysInMonth, int startingDayOfMonth) {
 		mainPanel = new JPanel();
-		mainPanel.setLayout(new GridLayout(7, 7));
+		mainPanel.setLayout(new GridLayout(7, 7, 2, 2));
 		mainPanel.setBackground(Color.LIGHT_GRAY);
 
 		String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
