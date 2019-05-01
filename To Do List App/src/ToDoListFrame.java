@@ -2,6 +2,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -32,6 +40,9 @@ public class ToDoListFrame extends JFrame {
 	private ToDoList tdList;
 	
 	private int currentYear, currentMonth, currentDay;
+	
+	private String[] months = {"January", "February", "March", "April", "May", "June",
+			"July", "August", "September", "October", "November", "December"};
 	
 	public ToDoListFrame(int realDay, int realMonth, int realYear, Dimension frameDimension) {
 		FRAME_DIMENSION = frameDimension;
@@ -136,7 +147,17 @@ public class ToDoListFrame extends JFrame {
 		exportButton.setBackground(Color.WHITE);
 		exportButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		exportButton.addActionListener(event -> {
-			System.out.println("export");
+			 BufferedWriter output = null;
+		        try {
+		            File file = new File(getMonth(currentMonth) + "_" + currentYear + ".txt");
+		            output = new BufferedWriter(new FileWriter(file));
+		            for(int i = 0; i<tdList.getTasks().size(); i++) {
+		            	output.write(tdList.getTaskAtIndex(i).toString());
+		            }
+		            output.close();
+		        } catch (Exception e ) {
+		      
+		          }
 		});
 		
 		
@@ -200,6 +221,10 @@ public class ToDoListFrame extends JFrame {
 				//If nothing is selected don't throw an error.
 			}
 		}
+	}
+	
+	private String getMonth(int index) {
+		return months[index-1];
 	}
 	
 	
