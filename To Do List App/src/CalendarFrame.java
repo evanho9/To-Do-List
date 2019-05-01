@@ -64,7 +64,6 @@ public class CalendarFrame extends JFrame {
 		headerPanel.setLayout(new BorderLayout());
 		headerPanel.setBackground(Color.GRAY);
 		
-		//TODO Create listener for dropdown menu for year selector
 		initCenterPanel();
 		initButtonPanel();
 		centerPanel.add(buttonPanel);
@@ -182,6 +181,7 @@ public class CalendarFrame extends JFrame {
 				//dayButton.setOpaque(false);
 				//dayButton.setContentAreaFilled(false);
 				dayButton.setBorderPainted(false);
+				dayButton.setOpaque(true);
 				dayButton.addActionListener(event -> {
 					t.goToDate(currentDayOfButton, currentMonth, currentYear);
 					selected.setBackground(Color.WHITE);
@@ -258,6 +258,7 @@ public class CalendarFrame extends JFrame {
 				//dayButton.setOpaque(false);
 				//dayButton.setContentAreaFilled(false);
 				dayButton.setBorderPainted(false);
+				dayButton.setOpaque(true);
 				dayButton.addActionListener(event -> {
 					t.goToDate(currentDayOfButton, currentMonth, currentYear);
 					selected.setBackground(Color.WHITE);
