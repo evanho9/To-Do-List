@@ -18,6 +18,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 public class CalendarFrame extends JFrame {
 	
@@ -185,6 +187,8 @@ public class CalendarFrame extends JFrame {
 			mainPanel.add(placeholderButton);
 		}
 		
+		Border thickBorder = new LineBorder(Color.MAGENTA, 1);
+		
 		int i = 1;
 		int dayNumber = 1;
 		while (i <= 42) {
@@ -202,6 +206,7 @@ public class CalendarFrame extends JFrame {
 					selected = dayButton;
 					dayButton.setForeground(Color.MAGENTA);
 					dayButton.setBorderPainted(true);
+					dayButton.setBorder(thickBorder);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
 					t.update(currentDayOfButton, currentMonth, currentYear);
@@ -211,6 +216,7 @@ public class CalendarFrame extends JFrame {
 					dayButton.setForeground(Color.MAGENTA);
 					dayButton.setBorderPainted(true);
 					dayButton.setFocusPainted(false);
+					dayButton.setBorder(thickBorder);
 				}
 				mainPanel.add(dayButton);
 				dayNumber++;
@@ -273,6 +279,8 @@ public class CalendarFrame extends JFrame {
 		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
 		int startingDayOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
 		
+Border thickBorder = new LineBorder(Color.MAGENTA, 1);
+		
 		int i = 1;
 		int dayNumber = 1;
 		while (i <= 42) {
@@ -290,6 +298,7 @@ public class CalendarFrame extends JFrame {
 					selected = dayButton;
 					dayButton.setForeground(Color.MAGENTA);
 					dayButton.setBorderPainted(true);
+					dayButton.setBorder(thickBorder);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
 					t.update(currentDayOfButton, currentMonth, currentYear);
@@ -299,6 +308,7 @@ public class CalendarFrame extends JFrame {
 					dayButton.setForeground(Color.MAGENTA);
 					dayButton.setBorderPainted(true);
 					dayButton.setFocusPainted(false);
+					dayButton.setBorder(thickBorder);
 				}
 				mainPanel.add(dayButton);
 				dayNumber++;
