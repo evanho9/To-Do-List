@@ -171,11 +171,15 @@ public class CalendarFrame extends JFrame {
 				JButton dayButton = new JButton(Integer.toString(i));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
+				dayButton.setOpaque(false);
+				dayButton.setContentAreaFilled(false);
+				dayButton.setBorderPainted(false);
 				dayButton.addActionListener(event -> {
 					t.goToDate(currentDayOfButton, currentMonth, currentYear);
 					selected.setBackground(Color.WHITE);
 					selected = dayButton;
 					dayButton.setBackground(Color.RED);
+					dayButton.setForeground(Color.RED);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
 				});
@@ -187,6 +191,9 @@ public class CalendarFrame extends JFrame {
 			} else {
 				JButton placeholderButton = new JButton("");
 				placeholderButton.setBackground(Color.lightGray);
+				placeholderButton.setOpaque(true);
+				placeholderButton.setContentAreaFilled(true);
+				placeholderButton.setBorderPainted(false);
 				placeholderButton.addActionListener(event -> {
 					
 				});
@@ -240,11 +247,15 @@ public class CalendarFrame extends JFrame {
 				JButton dayButton = new JButton(Integer.toString(i));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
+				dayButton.setOpaque(false);
+				dayButton.setContentAreaFilled(false);
+				dayButton.setBorderPainted(false);
 				dayButton.addActionListener(event -> {
 					t.goToDate(currentDayOfButton, currentMonth, currentYear);
 					selected.setBackground(Color.WHITE);
 					selected = dayButton;
 					dayButton.setBackground(Color.RED);
+					dayButton.setForeground(Color.RED);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
 				});
@@ -256,6 +267,9 @@ public class CalendarFrame extends JFrame {
 			} else {
 				JButton placeholderButton = new JButton();
 				placeholderButton.setBackground(Color.lightGray);
+				placeholderButton.setOpaque(true);
+				placeholderButton.setContentAreaFilled(true);
+				placeholderButton.setBorderPainted(false);
 				placeholderButton.addActionListener(event -> {
 					
 				});
