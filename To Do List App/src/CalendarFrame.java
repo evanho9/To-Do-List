@@ -46,7 +46,8 @@ public class CalendarFrame extends JFrame {
 		int realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
 		int realMonth = cal.get(GregorianCalendar.MONTH);
 		int realYear = cal.get(GregorianCalendar.YEAR); 
-		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
+		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+		int startingDayOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
 		currentDay = realDay;
 		currentMonth = realMonth+1;
 		currentYear = realYear;
@@ -56,7 +57,7 @@ public class CalendarFrame extends JFrame {
 		
 		initHeader();
 		initFooter();
-		initCalendarView(daysInMonth);
+		initCalendarView(daysInMonth, startingDayOfMonth);
 		endOperations();
 	}
 
@@ -74,6 +75,7 @@ public class CalendarFrame extends JFrame {
 		
 		JButton forwardMonth = new JButton("Next Month -->");
 		forwardMonth.setBackground(Color.WHITE);
+		forwardMonth.setFocusPainted(false);
 		forwardMonth.addActionListener(event -> {
 			if (currentMonth == 12) {
 				currentMonth = 1;
@@ -89,6 +91,7 @@ public class CalendarFrame extends JFrame {
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
 		
 		JButton previousMonth = new JButton("<-- Prev. Month");
+		previousMonth.setFocusPainted(false);
 		previousMonth.setBackground(Color.WHITE);
 		previousMonth.addActionListener(event -> {
 			if (currentMonth == 1) {
@@ -144,6 +147,7 @@ public class CalendarFrame extends JFrame {
 		
 		JButton forwardYear = new JButton("Λ (+1 Year)");
 		forwardYear.setBackground(Color.WHITE);
+		forwardYear.setFocusPainted(false);
 		forwardYear.addActionListener(event -> {
 			currentYear++;
 			t.update(currentDay, currentMonth, currentYear);
@@ -152,6 +156,7 @@ public class CalendarFrame extends JFrame {
 		
 		JButton previousYear = new JButton("V (-1 Year)");
 		previousYear.setBackground(Color.WHITE);
+		previousYear.setFocusPainted(false);
 		previousYear.addActionListener(event -> {
 			currentYear--;
 			t.update(currentDay, currentMonth, currentYear);
@@ -162,41 +167,53 @@ public class CalendarFrame extends JFrame {
 		buttonPanel.add(previousYear);
 	}
 
-	private void initCalendarView(int daysInMonth) {
+	private void initCalendarView(int daysInMonth, int startingDayOfMonth) {
 		mainPanel = new JPanel();
-		mainPanel.setLayout(new GridLayout(6, 7));
+		mainPanel.setLayout(new GridLayout(7, 7));
 		mainPanel.setBackground(Color.LIGHT_GRAY);
 
 		String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-		for (String day: days) {
-			JLabel dayLabel = new JLabel(day);
-			mainPanel.add(dayLabel);
+		for (String dayName: days) {
+			JButton placeholderButton = new JButton(dayName);
+			placeholderButton.setBackground(Color.LIGHT_GRAY);
+			placeholderButton.setOpaque(true);
+			placeholderButton.setContentAreaFilled(true);
+			placeholderButton.setBorderPainted(false);
+			placeholderButton.addActionListener(event -> {
+				
+			});
+			mainPanel.add(placeholderButton);
 		}
-
+		
 		int i = 1;
-		while (i <= 35) {
-			if (i < daysInMonth) {
-				JButton dayButton = new JButton(Integer.toString(i));
+		int dayNumber = 1;
+		while (i <= 42) {
+			if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
+				JButton dayButton = new JButton(Integer.toString(dayNumber));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
-				//dayButton.setOpaque(false);
-				//dayButton.setContentAreaFilled(false);
 				dayButton.setBorderPainted(false);
+				dayButton.setFocusPainted(false);
 				dayButton.setOpaque(true);
 				dayButton.addActionListener(event -> {
-					selected.setBackground(Color.WHITE);
+					selected.setForeground(Color.BLACK);
+					selected.setBorderPainted(false);
+					selected.setFocusPainted(false);
 					selected = dayButton;
-					dayButton.setBackground(Color.CYAN);
-					//dayButton.setForeground(Color.RED);
+					dayButton.setForeground(Color.MAGENTA);
+					dayButton.setBorderPainted(true);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
 					t.update(currentDayOfButton, currentMonth, currentYear);
 				});
-				if (i == currentDay) {
+				if (dayNumber == currentDay) {
 					selected = dayButton;
-					dayButton.setBackground(Color.CYAN);
+					dayButton.setForeground(Color.MAGENTA);
+					dayButton.setBorderPainted(true);
+					dayButton.setFocusPainted(false);
 				}
 				mainPanel.add(dayButton);
+				dayNumber++;
 			} else {
 				JButton placeholderButton = new JButton("");
 				placeholderButton.setBackground(Color.LIGHT_GRAY);
@@ -241,40 +258,52 @@ public class CalendarFrame extends JFrame {
 		
 		String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		for (String dayName: days) {
-			JLabel dayLabel = new JLabel(dayName);
-			mainPanel.add(dayLabel);
+			JButton placeholderButton = new JButton(dayName);
+			placeholderButton.setBackground(Color.LIGHT_GRAY);
+			placeholderButton.setOpaque(true);
+			placeholderButton.setContentAreaFilled(true);
+			placeholderButton.setBorderPainted(false);
+			placeholderButton.addActionListener(event -> {
+				
+			});
+			mainPanel.add(placeholderButton);
 		}
 		
 		GregorianCalendar cal = new GregorianCalendar(year, month-1, 1);
-		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
 		int startingDayOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
-
+		
 		int i = 1;
-		while (i <= 35) {
-			if (i <= daysInMonth) {
-				JButton dayButton = new JButton(Integer.toString(i));
+		int dayNumber = 1;
+		while (i <= 42) {
+			if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
+				JButton dayButton = new JButton(Integer.toString(dayNumber));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
-				//dayButton.setOpaque(false);
-				//dayButton.setContentAreaFilled(false);
 				dayButton.setBorderPainted(false);
+				dayButton.setFocusPainted(false);
 				dayButton.setOpaque(true);
 				dayButton.addActionListener(event -> {
-					selected.setBackground(Color.WHITE);
+					selected.setForeground(Color.BLACK);
+					selected.setBorderPainted(false);
+					selected.setFocusPainted(false);
 					selected = dayButton;
-					dayButton.setBackground(Color.CYAN);
-					//dayButton.setForeground(Color.RED);
+					dayButton.setForeground(Color.MAGENTA);
+					dayButton.setBorderPainted(true);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
 					t.update(currentDayOfButton, currentMonth, currentYear);
 				});
-				if (i == currentDay) {
+				if (dayNumber == currentDay) {
 					selected = dayButton;
-					dayButton.setBackground(Color.CYAN);
+					dayButton.setForeground(Color.MAGENTA);
+					dayButton.setBorderPainted(true);
+					dayButton.setFocusPainted(false);
 				}
 				mainPanel.add(dayButton);
+				dayNumber++;
 			} else {
-				JButton placeholderButton = new JButton();
+				JButton placeholderButton = new JButton("");
 				placeholderButton.setBackground(Color.LIGHT_GRAY);
 				placeholderButton.setOpaque(true);
 				placeholderButton.setContentAreaFilled(true);
