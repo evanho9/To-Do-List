@@ -148,18 +148,7 @@ public class ToDoListFrame extends JFrame {
 		exportButton.setBackground(Color.WHITE);
 		exportButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		exportButton.addActionListener(event -> {
-			PrintWriter writer;
-			try {
-				writer = new PrintWriter(getMonth(currentMonth) + "_" + currentYear + ".txt", "UTF-8");
-				for(int i = 0; i<tdList.getTasks().size(); i++) {
-					writer.println(tdList.getTaskAtIndex(i).toString());
-				}
-				writer.close();
-			}
-			catch (Exception e) {
-				
-			}
-		     
+			exportThisMonth();
 		});
 		
 		
@@ -203,15 +192,6 @@ public class ToDoListFrame extends JFrame {
 		
 		taskList.setModel(taskNames);
 		taskScrollPane.repaint();
-		System.out.println("Reached day: " + currentDay + ", month: " + currentMonth + ", year: "+ currentYear);
-	}
-	
-	public void goToDate(int day, int month, int year) {
-		currentDay = day;
-		currentMonth = month;
-		currentYear = year;
-		update(currentDay, currentMonth, currentYear);
-		System.out.println("Reached day: " + day + ", month: " + month + ", year: "+ year);
 	}
 	
 	public void selectedTask() {
@@ -234,5 +214,18 @@ public class ToDoListFrame extends JFrame {
 		return months[index-1];
 	}
 	
+	private void exportThisMonth() { 
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(getMonth(currentMonth) + "_" + currentYear + ".txt", "UTF-8");
+			writer.println("To-Do List " + "(" + getMonth(currentMonth) + "," + currentYear + "): ");
+			writer.println(tdList.getAllTasksInCurrentMonth(currentMonth, currentYear));
+			writer.close();
+		}
+		catch (Exception e) {
+			
+		}
+	     
+	}
 	
 }

@@ -37,7 +37,14 @@ public class ToDoList {
 		tasks.set(index, newTask);
 	}
 	
-	public void getAllTasksInCurrentMonth() {
+	public String getAllTasksInCurrentMonth(int month, int year) {
+		String result = "";
+		for(Task t : tasks) {
+			if(t.getMonth() == month && t.getYear() == year)
+				result += "\t" + t.toString() + "\n";
+		}
+		
+		return result;
 		
 	}
 }
