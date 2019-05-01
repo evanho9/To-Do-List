@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -170,6 +171,12 @@ public class ToDoListFrame extends JFrame {
 	}
 	
 	private void endOperations() {
+		try {
+			ImageIcon imageIcon = new ImageIcon("icon.png");
+			setIconImage(imageIcon.getImage());
+		} catch (Exception e) {
+			System.out.println("Icon image not found.");
+		}
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);

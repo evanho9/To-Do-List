@@ -4,12 +4,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -253,6 +255,12 @@ public class CalendarFrame extends JFrame {
 	}
 	
 	private void endOperations() {
+		try {
+			ImageIcon imageIcon = new ImageIcon("icon.png");
+			setIconImage(imageIcon.getImage());
+		} catch (Exception e) {
+			System.out.println("Icon image not found.");
+		}
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -279,7 +287,7 @@ public class CalendarFrame extends JFrame {
 		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
 		int startingDayOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
 		
-Border thickBorder = new LineBorder(Color.MAGENTA, 1);
+		Border thickBorder = new LineBorder(Color.MAGENTA, 1);
 		
 		int i = 1;
 		int dayNumber = 1;
