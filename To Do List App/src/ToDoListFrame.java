@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -147,17 +148,18 @@ public class ToDoListFrame extends JFrame {
 		exportButton.setBackground(Color.WHITE);
 		exportButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		exportButton.addActionListener(event -> {
-			 BufferedWriter output = null;
-		        try {
-		            File file = new File(getMonth(currentMonth) + "_" + currentYear + ".txt");
-		            output = new BufferedWriter(new FileWriter(file));
-		            for(int i = 0; i<tdList.getTasks().size(); i++) {
-		            	output.write(tdList.getTaskAtIndex(i).toString());
-		            }
-		            output.close();
-		        } catch (Exception e ) {
-		      
-		          }
+			PrintWriter writer;
+			try {
+				writer = new PrintWriter(getMonth(currentMonth) + "_" + currentYear + ".txt", "UTF-8");
+				for(int i = 0; i<tdList.getTasks().size(); i++) {
+					writer.println(tdList.getTaskAtIndex(i).toString());
+				}
+				writer.close();
+			}
+			catch (Exception e) {
+				
+			}
+		     
 		});
 		
 		

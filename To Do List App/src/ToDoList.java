@@ -36,4 +36,8 @@ public class ToDoList {
 	public void editTask(int index, Task newTask) {
 		tasks.set(index, newTask);
 	}
+	
+	public void getAllTasksInCurrentMonth() {
+		
+	}
 }
