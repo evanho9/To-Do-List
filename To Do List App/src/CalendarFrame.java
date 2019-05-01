@@ -52,6 +52,7 @@ public class CalendarFrame extends JFrame {
 		currentYear = realYear;
 		
 		t = new ToDoListFrame(realDay, realMonth, realYear, FRAME_DIMENSION);
+		t.update(currentDay, currentMonth, currentYear);
 		
 		initHeader();
 		initFooter();
@@ -189,8 +190,9 @@ public class CalendarFrame extends JFrame {
 					//dayButton.setForeground(Color.RED);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
+					t.update(currentDayOfButton, currentMonth, currentYear);
 				});
-				if (i == currentDay-1) {
+				if (i == currentDay) {
 					selected = dayButton;
 					dayButton.setBackground(Color.CYAN);
 				}
@@ -264,6 +266,7 @@ public class CalendarFrame extends JFrame {
 					//dayButton.setForeground(Color.RED);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
 					+ (currentDayOfButton) + "/" + (currentYear));
+					t.update(currentDayOfButton, currentMonth, currentYear);
 				});
 				if (i == currentDay) {
 					selected = dayButton;

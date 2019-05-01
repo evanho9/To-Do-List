@@ -203,6 +203,7 @@ public class ToDoListFrame extends JFrame {
 		
 		taskList.setModel(taskNames);
 		taskScrollPane.repaint();
+		System.out.println("Reached day: " + currentDay + ", month: " + currentMonth + ", year: "+ currentYear);
 	}
 	
 	public void goToDate(int day, int month, int year) {
