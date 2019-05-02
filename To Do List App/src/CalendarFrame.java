@@ -50,7 +50,7 @@ public class CalendarFrame extends JFrame {
 		int realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
 		int realMonth = cal.get(GregorianCalendar.MONTH);
 		int realYear = cal.get(GregorianCalendar.YEAR); 
-		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+		int daysInMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
 		int startingDayOfMonth = cal.get(GregorianCalendar.DAY_OF_WEEK);
 		currentDay = realDay;
 		currentMonth = realMonth+1;
@@ -61,7 +61,7 @@ public class CalendarFrame extends JFrame {
 		
 		initHeader();
 		initFooter();
-		initCalendarView(daysInMonth, startingDayOfMonth);
+		initCalendarView(daysInMonth, startingDayOfMonth, currentYear);
 		endOperations();
 	}
 
@@ -171,7 +171,7 @@ public class CalendarFrame extends JFrame {
 		buttonPanel.add(previousYear);
 	}
 
-	private void initCalendarView(int daysInMonth, int startingDayOfMonth) {
+	private void initCalendarView(int daysInMonth, int startingDayOfMonth, int year) {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(7, 7, 2, 2));
 		mainPanel.setBackground(Color.LIGHT_GRAY);
@@ -192,9 +192,45 @@ public class CalendarFrame extends JFrame {
 		Border thickBorder = new LineBorder(Color.MAGENTA, 1);
 		
 		int i = 1;
+		
+		GregorianCalendar cal;
+		int daysBefore = startingDayOfMonth-1;
+		if (currentMonth == 1)
+			cal = new GregorianCalendar(year-1, 11, 1);
+		else
+			cal = new GregorianCalendar(year, currentMonth, 1);
+		int daysInPrevMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
+		int prevMonthDay = daysInPrevMonth - daysBefore;
+		
+		int afterMonthDay = 1;
+		
 		int dayNumber = 1;
 		while (i <= 42) {
-			if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
+			if (i <= daysBefore) {
+				JButton placeholderButton = new JButton(Integer.toString(prevMonthDay));
+				placeholderButton.setBackground(Color.LIGHT_GRAY);
+				placeholderButton.setForeground(Color.GRAY);
+				placeholderButton.setOpaque(true);
+				placeholderButton.setContentAreaFilled(true);
+				placeholderButton.setBorderPainted(false);
+				placeholderButton.addActionListener(event -> {
+					
+				});
+				mainPanel.add(placeholderButton);
+				prevMonthDay++;
+			} else if (dayNumber >= daysInMonth) {
+				JButton placeholderButton = new JButton(Integer.toString(afterMonthDay));
+				placeholderButton.setBackground(Color.LIGHT_GRAY);
+				placeholderButton.setForeground(Color.GRAY);
+				placeholderButton.setOpaque(true);
+				placeholderButton.setContentAreaFilled(true);
+				placeholderButton.setBorderPainted(false);
+				placeholderButton.addActionListener(event -> {
+					
+				});
+				mainPanel.add(placeholderButton);
+				afterMonthDay++;
+			} else if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
 				JButton dayButton = new JButton(Integer.toString(dayNumber));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
@@ -222,16 +258,6 @@ public class CalendarFrame extends JFrame {
 				}
 				mainPanel.add(dayButton);
 				dayNumber++;
-			} else {
-				JButton placeholderButton = new JButton("");
-				placeholderButton.setBackground(Color.LIGHT_GRAY);
-				placeholderButton.setOpaque(true);
-				placeholderButton.setContentAreaFilled(true);
-				placeholderButton.setBorderPainted(false);
-				placeholderButton.addActionListener(event -> {
-					
-				});
-				mainPanel.add(placeholderButton);
 			}
 			i++;
 		}
@@ -267,7 +293,7 @@ public class CalendarFrame extends JFrame {
 		setLocationRelativeTo(t);
 	}
 	
-	private void refreshCalendar(int currentDay, int month, int year) {
+	private void refreshCalendar(int day, int month, int year) {
 		mainPanel.removeAll();
 		
 		String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -290,9 +316,44 @@ public class CalendarFrame extends JFrame {
 		Border thickBorder = new LineBorder(Color.MAGENTA, 1);
 		
 		int i = 1;
+		
+		int daysBefore = startingDayOfMonth-1;
+		if (currentMonth == 1)
+			cal = new GregorianCalendar(year-1, 11, 1);
+		else
+			cal = new GregorianCalendar(year, currentMonth, 1);
+		int daysInPrevMonth = cal.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)+1;
+		int prevMonthDay = daysInPrevMonth - daysBefore;
+		
+		int afterMonthDay = 1;
+		
 		int dayNumber = 1;
 		while (i <= 42) {
-			if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
+			if (i <= daysBefore) {
+				JButton placeholderButton = new JButton(Integer.toString(prevMonthDay));
+				placeholderButton.setBackground(Color.LIGHT_GRAY);
+				placeholderButton.setForeground(Color.GRAY);
+				placeholderButton.setOpaque(true);
+				placeholderButton.setContentAreaFilled(true);
+				placeholderButton.setBorderPainted(false);
+				placeholderButton.addActionListener(event -> {
+					
+				});
+				mainPanel.add(placeholderButton);
+				prevMonthDay++;
+			} else if (dayNumber >= daysInMonth) {
+				JButton placeholderButton = new JButton(Integer.toString(afterMonthDay));
+				placeholderButton.setBackground(Color.LIGHT_GRAY);
+				placeholderButton.setForeground(Color.GRAY);
+				placeholderButton.setOpaque(true);
+				placeholderButton.setContentAreaFilled(true);
+				placeholderButton.setBorderPainted(false);
+				placeholderButton.addActionListener(event -> {
+					
+				});
+				mainPanel.add(placeholderButton);
+				afterMonthDay++;
+			} else if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
 				JButton dayButton = new JButton(Integer.toString(dayNumber));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
 				dayButton.setBackground(Color.WHITE);
@@ -320,16 +381,6 @@ public class CalendarFrame extends JFrame {
 				}
 				mainPanel.add(dayButton);
 				dayNumber++;
-			} else {
-				JButton placeholderButton = new JButton("");
-				placeholderButton.setBackground(Color.LIGHT_GRAY);
-				placeholderButton.setOpaque(true);
-				placeholderButton.setContentAreaFilled(true);
-				placeholderButton.setBorderPainted(false);
-				placeholderButton.addActionListener(event -> {
-					
-				});
-				mainPanel.add(placeholderButton);
 			}
 			i++;
 		}
