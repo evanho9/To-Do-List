@@ -38,13 +38,23 @@ public class CalendarFrame extends JFrame {
 	private String[] months = {"January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"};
 
+	private Color textColor;
+	private Color frameBackgroundColor;
+	private Color buttonColor;
+	private Color calendarBackgroundColor;
+	private Color selectedDayColor;
 	
 	public CalendarFrame(Dimension frameDimension) {
 		FRAME_DIMENSION = frameDimension;
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
 		setTitle("Calendar Frame");
-		setBackground(Color.GRAY);
+		
+		textColor = Color.BLACK;
+		frameBackgroundColor = Color.GRAY;
+		buttonColor = Color.WHITE;
+		calendarBackgroundColor = Color.LIGHT_GRAY;
+		selectedDayColor = Color.MAGENTA;
 		
 		GregorianCalendar cal = new GregorianCalendar();
 		int realDay = cal.get(GregorianCalendar.DAY_OF_MONTH);
@@ -68,7 +78,7 @@ public class CalendarFrame extends JFrame {
 	private void initHeader() {
 		headerPanel = new JPanel();
 		headerPanel.setLayout(new BorderLayout());
-		headerPanel.setBackground(Color.GRAY);
+		headerPanel.setBackground(frameBackgroundColor);
 		
 		initCenterPanel();
 		initButtonPanel();
@@ -78,7 +88,7 @@ public class CalendarFrame extends JFrame {
 
 		
 		JButton forwardMonth = new JButton("Next Month -->");
-		forwardMonth.setBackground(Color.WHITE);
+		forwardMonth.setBackground(buttonColor);
 		forwardMonth.setFocusPainted(false);
 		forwardMonth.addActionListener(event -> {
 			if (currentMonth == 12) {
@@ -89,14 +99,14 @@ public class CalendarFrame extends JFrame {
 				currentMonth++;
 				currentDay = 1;
 			}
-			t.update(currentDay, currentMonth, currentYear);
+			//t.update(currentDay, currentMonth, currentYear);
 			refreshCalendar(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
 		
 		JButton previousMonth = new JButton("<-- Prev. Month");
 		previousMonth.setFocusPainted(false);
-		previousMonth.setBackground(Color.WHITE);
+		previousMonth.setBackground(buttonColor);
 		previousMonth.addActionListener(event -> {
 			if (currentMonth == 1) {
 				currentMonth = 12;
@@ -106,7 +116,7 @@ public class CalendarFrame extends JFrame {
 				currentMonth--;
 				currentDay = 1;
 			}
-			t.update(currentDay, currentMonth, currentYear);
+			//t.update(currentDay, currentMonth, currentYear);
 			refreshCalendar(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(previousMonth, BorderLayout.WEST);
@@ -119,13 +129,13 @@ public class CalendarFrame extends JFrame {
 	private void initCenterPanel() {
 		centerPanel = new JPanel();
 		centerPanel.setLayout(new FlowLayout());
-		centerPanel.setBackground(Color.GRAY);
+		centerPanel.setBackground(frameBackgroundColor);
 		
 		monthLabel = new JLabel(getMonth(currentMonth));
 		centerPanel.add(monthLabel);
 		
 		yearSelector = new JComboBox<>();
-		yearSelector.setBackground(Color.WHITE);
+		yearSelector.setBackground(buttonColor);
 		for(int i = 1583; i <= 3000; i++) {
 			yearSelector.addItem(i);
 		}
@@ -136,7 +146,7 @@ public class CalendarFrame extends JFrame {
 				JComboBox<Integer> combo = (JComboBox<Integer>) event.getSource();
 				if(currentYear != (int) combo.getSelectedItem()) {
 					currentYear = (int) combo.getSelectedItem();
-					t.update(currentDay, currentMonth, currentYear);
+					//t.update(currentDay, currentMonth, currentYear);
 					refreshCalendar(currentDay, currentMonth, currentYear);
 				}
 			}
@@ -147,23 +157,23 @@ public class CalendarFrame extends JFrame {
 	private void initButtonPanel() {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-		buttonPanel.setBackground(Color.GRAY);
+		buttonPanel.setBackground(frameBackgroundColor);
 		
 		JButton forwardYear = new JButton("Λ (+1 Year)");
-		forwardYear.setBackground(Color.WHITE);
+		forwardYear.setBackground(buttonColor);
 		forwardYear.setFocusPainted(false);
 		forwardYear.addActionListener(event -> {
 			currentYear++;
-			t.update(currentDay, currentMonth, currentYear);
+			//t.update(currentDay, currentMonth, currentYear);
 			refreshCalendar(currentDay, currentMonth, currentYear);
 		});
 		
 		JButton previousYear = new JButton("V (-1 Year)");
-		previousYear.setBackground(Color.WHITE);
+		previousYear.setBackground(buttonColor);
 		previousYear.setFocusPainted(false);
 		previousYear.addActionListener(event -> {
 			currentYear--;
-			t.update(currentDay, currentMonth, currentYear);
+			//t.update(currentDay, currentMonth, currentYear);
 			refreshCalendar(currentDay, currentMonth, currentYear);
 		});
 		
@@ -174,12 +184,12 @@ public class CalendarFrame extends JFrame {
 	private void initCalendarView(int daysInMonth, int startingDayOfMonth, int year) {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new GridLayout(7, 7, 2, 2));
-		mainPanel.setBackground(Color.LIGHT_GRAY);
+		mainPanel.setBackground(calendarBackgroundColor);
 
 		String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		for (String dayName: days) {
 			JButton placeholderButton = new JButton(dayName);
-			placeholderButton.setBackground(Color.LIGHT_GRAY);
+			placeholderButton.setBackground(calendarBackgroundColor);
 			placeholderButton.setOpaque(true);
 			placeholderButton.setContentAreaFilled(true);
 			placeholderButton.setBorderPainted(false);
@@ -189,7 +199,7 @@ public class CalendarFrame extends JFrame {
 			mainPanel.add(placeholderButton);
 		}
 		
-		Border thickBorder = new LineBorder(Color.MAGENTA, 1);
+		Border thickBorder = new LineBorder(selectedDayColor, 1);
 		
 		int i = 1;
 		
@@ -208,8 +218,8 @@ public class CalendarFrame extends JFrame {
 		while (i <= 42) {
 			if (i <= daysBefore) {
 				JButton placeholderButton = new JButton(Integer.toString(prevMonthDay));
-				placeholderButton.setBackground(Color.LIGHT_GRAY);
-				placeholderButton.setForeground(Color.GRAY);
+				placeholderButton.setBackground(calendarBackgroundColor);
+				placeholderButton.setForeground(frameBackgroundColor);
 				placeholderButton.setOpaque(true);
 				placeholderButton.setContentAreaFilled(true);
 				placeholderButton.setBorderPainted(false);
@@ -220,8 +230,8 @@ public class CalendarFrame extends JFrame {
 				prevMonthDay++;
 			} else if (dayNumber >= daysInMonth) {
 				JButton placeholderButton = new JButton(Integer.toString(afterMonthDay));
-				placeholderButton.setBackground(Color.LIGHT_GRAY);
-				placeholderButton.setForeground(Color.GRAY);
+				placeholderButton.setBackground(calendarBackgroundColor);
+				placeholderButton.setForeground(frameBackgroundColor);
 				placeholderButton.setOpaque(true);
 				placeholderButton.setContentAreaFilled(true);
 				placeholderButton.setBorderPainted(false);
@@ -233,16 +243,16 @@ public class CalendarFrame extends JFrame {
 			} else if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
 				JButton dayButton = new JButton(Integer.toString(dayNumber));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
-				dayButton.setBackground(Color.WHITE);
+				dayButton.setBackground(buttonColor);
 				dayButton.setBorderPainted(false);
 				dayButton.setFocusPainted(false);
 				dayButton.setOpaque(true);
 				dayButton.addActionListener(event -> {
-					selected.setForeground(Color.BLACK);
+					selected.setForeground(textColor);
 					selected.setBorderPainted(false);
 					selected.setFocusPainted(false);
 					selected = dayButton;
-					dayButton.setForeground(Color.MAGENTA);
+					dayButton.setForeground(selectedDayColor);
 					dayButton.setBorderPainted(true);
 					dayButton.setBorder(thickBorder);
 					dateLabel.setText("Date: " + (currentMonth) + "/" 
@@ -251,7 +261,7 @@ public class CalendarFrame extends JFrame {
 				});
 				if (dayNumber == currentDay) {
 					selected = dayButton;
-					dayButton.setForeground(Color.MAGENTA);
+					dayButton.setForeground(selectedDayColor);
 					dayButton.setBorderPainted(true);
 					dayButton.setFocusPainted(false);
 					dayButton.setBorder(thickBorder);
@@ -270,7 +280,7 @@ public class CalendarFrame extends JFrame {
 	private void initFooter() {
 		footerPanel = new JPanel();
 		footerPanel.setLayout(new FlowLayout());
-		footerPanel.setBackground(Color.GRAY);
+		footerPanel.setBackground(frameBackgroundColor);
 		
 		dateLabel = new JLabel("Date: ");
 		dateLabel.setForeground(Color.WHITE);
@@ -287,6 +297,7 @@ public class CalendarFrame extends JFrame {
 		} catch (Exception e) {
 			System.out.println("Icon image not found.");
 		}
+		setBackground(frameBackgroundColor);
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -392,5 +403,17 @@ public class CalendarFrame extends JFrame {
 	
 	private String getMonth(int index) {
 		return months[index-1];
+	}
+	
+	public Color getFrameBackgroundColor() {
+		return frameBackgroundColor;
+	}
+	
+	public Color getCalendarBackgroundColor() {
+		return calendarBackgroundColor;
+	}
+	
+	public Color getSelectedDayColor() {
+		return selectedDayColor;
 	}
 }

@@ -46,12 +46,20 @@ public class ToDoListFrame extends JFrame {
 	private String[] months = {"January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"};
 	
+	private Color textColor;
+	private Color frameBackgroundColor;
+	private Color buttonColor;
+	
 	public ToDoListFrame(int realDay, int realMonth, int realYear, Dimension frameDimension) {
 		FRAME_DIMENSION = frameDimension;
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
 		setTitle("To-Do List");
 		tdList = new ToDoList();
+		
+		textColor = Color.BLACK;
+		frameBackgroundColor = Color.GRAY;
+		buttonColor = Color.WHITE;
 		
 		initHeader();
 		initTaskList();
@@ -62,13 +70,13 @@ public class ToDoListFrame extends JFrame {
 
 	private void initHeader() {
 		headerPanel = new JPanel();
-		headerPanel.setBackground(Color.GRAY);
+		headerPanel.setBackground(frameBackgroundColor);
 		headerPanel.setLayout(new FlowLayout());
 		
 		dateLabel = new JLabel("Date: ");
 		dateLabel.setText("Date: " + (currentMonth) + "/" 
 				+ (currentDay) + "/" + (currentYear));
-		dateLabel.setForeground(Color.WHITE);
+		dateLabel.setForeground(buttonColor);
 		
 		headerPanel.add(dateLabel);
 		headerPanel.setPreferredSize(new Dimension(FRAME_DIMENSION.width-50, FRAME_DIMENSION.height/15));
@@ -77,7 +85,7 @@ public class ToDoListFrame extends JFrame {
 
 	private void initTaskList() {
 		mainPanel = new JPanel();
-		mainPanel.setBackground(Color.GRAY);
+		mainPanel.setBackground(frameBackgroundColor);
 		mainPanel.setLayout(new FlowLayout());
 		
 		taskList = new JList();
@@ -94,15 +102,15 @@ public class ToDoListFrame extends JFrame {
 	
 	private void initFooter() {
 		footerPanel = new JPanel();
-		footerPanel.setBackground(Color.GRAY);
+		footerPanel.setBackground(frameBackgroundColor);
 		footerPanel.setLayout(new BorderLayout());
 		
 		textField = new JTextField("");
-		//textField.setBackground(Color.WHITE);
+		//textField.setBackground(Color.RED);
 		textField.setPreferredSize(new Dimension(FRAME_DIMENSION.width -50, FRAME_DIMENSION.height/20));
 		
 		JButton deleteButton = new JButton("Delete");
-		deleteButton.setBackground(Color.WHITE);
+		deleteButton.setBackground(buttonColor);
 		deleteButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		deleteButton.addActionListener(event -> {
 			try {
@@ -117,7 +125,7 @@ public class ToDoListFrame extends JFrame {
 		});
 		
 		JButton editButton = new JButton("Edit");
-		editButton.setBackground(Color.WHITE);
+		editButton.setBackground(buttonColor);
 		editButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		editButton.addActionListener(event -> {
 			try {
@@ -134,7 +142,7 @@ public class ToDoListFrame extends JFrame {
 		});
 		
 		JButton addButton = new JButton("Add");
-		addButton.setBackground(Color.WHITE);
+		addButton.setBackground(buttonColor);
 		addButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		addButton.addActionListener(event -> {
 			
@@ -146,7 +154,7 @@ public class ToDoListFrame extends JFrame {
 		});
 		
 		JButton exportButton = new JButton("Export");
-		exportButton.setBackground(Color.WHITE);
+		exportButton.setBackground(buttonColor);
 		exportButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		exportButton.addActionListener(event -> {
 			exportThisMonth();
@@ -154,12 +162,12 @@ public class ToDoListFrame extends JFrame {
 		
 		
 		JPanel textFieldPanel = new JPanel();
-		textFieldPanel.setBackground(Color.GRAY);
+		textFieldPanel.setBackground(frameBackgroundColor);
 		textFieldPanel.setLayout(new FlowLayout());
 		textFieldPanel.add(textField);
 		footerPanel.add(textFieldPanel, BorderLayout.NORTH);
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.GRAY);
+		buttonPanel.setBackground(frameBackgroundColor);
 		buttonPanel.setLayout(new FlowLayout());
 		buttonPanel.add(addButton);
 		buttonPanel.add(deleteButton);
@@ -233,6 +241,18 @@ public class ToDoListFrame extends JFrame {
 			
 		}
 	     
+	}
+	
+	public void setTextColor(Color color) {
+		textColor = color;
+	}
+	
+	public void setFrameBackgroundColor(Color color) {
+		frameBackgroundColor = color;
+	}
+	
+	public void setButtonColor(Color color) {
+		buttonColor = color;
 	}
 	
 }
