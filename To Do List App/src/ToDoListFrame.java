@@ -52,20 +52,26 @@ public class ToDoListFrame extends JFrame {
 	
 	public ToDoListFrame(int realDay, int realMonth, int realYear, Dimension frameDimension) {
 		FRAME_DIMENSION = frameDimension;
-		setPreferredSize(new Dimension(FRAME_DIMENSION));
-		setLayout(new BorderLayout());
-		setTitle("To-Do List");
+		initFrame();
 		tdList = new ToDoList();
 		
-		textColor = Color.BLACK;
-		frameBackgroundColor = Color.GRAY;
-		buttonColor = Color.WHITE;
-		
+		initColors();
 		initHeader();
 		initTaskList();
 		initFooter();
 		endOperations();
-		//selectedTask();
+	}
+	
+	private void initFrame() {	
+		setPreferredSize(new Dimension(FRAME_DIMENSION));
+		setLayout(new BorderLayout());
+		setTitle("To-Do List");
+	}
+	
+	private void initColors() {
+		textColor = Color.BLACK;
+		frameBackgroundColor = Color.GRAY;
+		buttonColor = Color.WHITE;
 	}
 
 	private void initHeader() {
@@ -106,7 +112,7 @@ public class ToDoListFrame extends JFrame {
 		footerPanel.setLayout(new BorderLayout());
 		
 		textField = new JTextField("");
-		//textField.setBackground(Color.RED);
+
 		textField.setPreferredSize(new Dimension(FRAME_DIMENSION.width -50, FRAME_DIMENSION.height/20));
 		
 		JButton deleteButton = new JButton("Delete");
