@@ -29,7 +29,7 @@ public class CalendarFrame extends JFrame {
 	
 	private JPanel headerPanel, mainPanel, footerPanel, centerPanel, buttonPanel;
 	private JLabel dateLabel, monthLabel;
-	private JButton selected;
+	private JButton selected, forwardMonth, previousMonth;
 	private JComboBox<Integer> yearSelector;
 	
 	private final Dimension FRAME_DIMENSION;
@@ -98,7 +98,7 @@ public class CalendarFrame extends JFrame {
 		
 		headerPanel.add(centerPanel, BorderLayout.CENTER);
 		
-		JButton forwardMonth = new JButton("Next Month -->");
+		forwardMonth = new JButton("Next Month -->");
 		forwardMonth.setBackground(buttonColor);
 		forwardMonth.setFocusPainted(false);
 		forwardMonth.addActionListener(event -> {
@@ -111,10 +111,11 @@ public class CalendarFrame extends JFrame {
 				currentDay = 1;
 			}
 			refreshCalendar(currentDay, currentMonth, currentYear);
+			t.update(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
 		
-		JButton previousMonth = new JButton("<-- Prev. Month");
+		previousMonth = new JButton("<-- Prev. Month");
 		previousMonth.setFocusPainted(false);
 		previousMonth.setBackground(buttonColor);
 		previousMonth.addActionListener(event -> {
@@ -127,6 +128,7 @@ public class CalendarFrame extends JFrame {
 				currentDay = 1;
 			}
 			refreshCalendar(currentDay, currentMonth, currentYear);
+			t.update(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(previousMonth, BorderLayout.WEST);
 		
@@ -428,9 +430,11 @@ public class CalendarFrame extends JFrame {
 	public void setFrameBackgroundColor(Color color) {
 		for (JPanel p : backgrounds) {
 			p.setBackground(color);
-		}
+		} 
 		setBackground(color);
+
 	}
+	
 	
 	public void setCalendarBackgroundColor(Color c) {
 		calendarBackgroundColor = c;
