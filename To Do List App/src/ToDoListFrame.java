@@ -46,6 +46,8 @@ public class ToDoListFrame extends JFrame {
 	private String[] months = {"January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"};
 	
+	
+	private ArrayList<JPanel> backgrounds;
 	private Color textColor;
 	private Color frameBackgroundColor;
 	private Color buttonColor;
@@ -55,6 +57,7 @@ public class ToDoListFrame extends JFrame {
 		initFrame();
 		tdList = new ToDoList();
 		
+		backgrounds = new ArrayList<>();
 		initColors();
 		initHeader();
 		initTaskList();
@@ -76,6 +79,7 @@ public class ToDoListFrame extends JFrame {
 
 	private void initHeader() {
 		headerPanel = new JPanel();
+		backgrounds.add(headerPanel);
 		headerPanel.setBackground(frameBackgroundColor);
 		headerPanel.setLayout(new FlowLayout());
 		
@@ -91,6 +95,7 @@ public class ToDoListFrame extends JFrame {
 
 	private void initTaskList() {
 		mainPanel = new JPanel();
+		backgrounds.add(mainPanel);		
 		mainPanel.setBackground(frameBackgroundColor);
 		mainPanel.setLayout(new FlowLayout());
 		
@@ -108,6 +113,7 @@ public class ToDoListFrame extends JFrame {
 	
 	private void initFooter() {
 		footerPanel = new JPanel();
+		backgrounds.add(footerPanel);
 		footerPanel.setBackground(frameBackgroundColor);
 		footerPanel.setLayout(new BorderLayout());
 		
@@ -168,11 +174,13 @@ public class ToDoListFrame extends JFrame {
 		
 		
 		JPanel textFieldPanel = new JPanel();
+		backgrounds.add(textFieldPanel);
 		textFieldPanel.setBackground(frameBackgroundColor);
 		textFieldPanel.setLayout(new FlowLayout());
 		textFieldPanel.add(textField);
 		footerPanel.add(textFieldPanel, BorderLayout.NORTH);
 		JPanel buttonPanel = new JPanel();
+		backgrounds.add(buttonPanel);
 		buttonPanel.setBackground(frameBackgroundColor);
 		buttonPanel.setLayout(new FlowLayout());
 		buttonPanel.add(addButton);
@@ -249,16 +257,11 @@ public class ToDoListFrame extends JFrame {
 	     
 	}
 	
-	public void setTextColor(Color color) {
-		textColor = color;
-	}
-	
 	public void setFrameBackgroundColor(Color color) {
-		frameBackgroundColor = color;
-	}
-	
-	public void setButtonColor(Color color) {
-		buttonColor = color;
+		for (JPanel p : backgrounds) {
+			p.setBackground(color);
+		}
+		setBackground(color);
 	}
 	
 }

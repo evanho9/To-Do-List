@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -7,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
@@ -38,6 +40,7 @@ public class CalendarFrame extends JFrame {
 	private String[] months = {"January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"};
 
+	private ArrayList<JPanel> backgrounds;
 	private Color textColor;
 	private Color frameBackgroundColor;
 	private Color buttonColor;
@@ -46,10 +49,7 @@ public class CalendarFrame extends JFrame {
 	
 	public CalendarFrame(Dimension frameDimension) {
 		FRAME_DIMENSION = frameDimension;
-		setPreferredSize(new Dimension(FRAME_DIMENSION));
-		setLayout(new BorderLayout());
-		setTitle("Calendar Frame");
-		
+		initFrame();
 		initColors();
 		
 		GregorianCalendar cal = new GregorianCalendar();
@@ -65,10 +65,17 @@ public class CalendarFrame extends JFrame {
 		t = new ToDoListFrame(realDay, realMonth, realYear, FRAME_DIMENSION);
 		t.update(currentDay, currentMonth, currentYear);
 		
+		backgrounds = new ArrayList<>();
 		initHeader();
 		initFooter();
 		initCalendarView(daysInMonth, startingDayOfMonth, currentYear);
 		endOperations();
+	}
+	
+	private void initFrame() {
+		setPreferredSize(new Dimension(FRAME_DIMENSION));
+		setLayout(new BorderLayout());
+		setTitle("Calendar Frame");
 	}
 	
 	private void initColors() {
@@ -81,6 +88,7 @@ public class CalendarFrame extends JFrame {
 
 	private void initHeader() {
 		headerPanel = new JPanel();
+		backgrounds.add(headerPanel);
 		headerPanel.setLayout(new BorderLayout());
 		headerPanel.setBackground(frameBackgroundColor);
 		
@@ -128,6 +136,7 @@ public class CalendarFrame extends JFrame {
 	
 	private void initCenterPanel() {
 		centerPanel = new JPanel();
+		backgrounds.add(centerPanel);
 		centerPanel.setLayout(new FlowLayout());
 		centerPanel.setBackground(frameBackgroundColor);
 		
@@ -152,6 +161,7 @@ public class CalendarFrame extends JFrame {
 	
 	private void initButtonPanel() {
 		buttonPanel = new JPanel();
+		backgrounds.add(buttonPanel);
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 		buttonPanel.setBackground(frameBackgroundColor);
 		
@@ -273,13 +283,23 @@ public class CalendarFrame extends JFrame {
 	
 	private void initFooter() {
 		footerPanel = new JPanel();
-		footerPanel.setLayout(new FlowLayout());
+		backgrounds.add(footerPanel);
+		footerPanel.setLayout(new BorderLayout());
 		footerPanel.setBackground(frameBackgroundColor);
 		
 		dateLabel = new JLabel("Date: ");
 		dateLabel.setForeground(buttonColor);
+		dateLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		footerPanel.add(dateLabel);
+		footerPanel.add(dateLabel, BorderLayout.CENTER);
+		
+		JButton settingsButton = new JButton("Settings");
+		settingsButton.setBackground(buttonColor);
+		settingsButton.setFocusPainted(false);
+		settingsButton.addActionListener(event -> {
+			SettingsFrame settingsFrame = new SettingsFrame(this, t, FRAME_DIMENSION);
+		});
+		footerPanel.add(settingsButton, BorderLayout.EAST);
 		
 		add(footerPanel, BorderLayout.SOUTH);
 	}
@@ -395,10 +415,31 @@ public class CalendarFrame extends JFrame {
 		mainPanel.repaint();
 	}
 	
+	public void repaintAll() {
+		for (Component c : this.getRootPane().getComponents()) {
+			c.repaint();
+		}
+	}
+	
 	private String getMonth(int index) {
 		return months[index-1];
 	}
 	
+	public void setFrameBackgroundColor(Color color) {
+		for (JPanel p : backgrounds) {
+			p.setBackground(color);
+		}
+		setBackground(color);
+	}
+	
+	public void setCalendarBackgroundColor(Color c) {
+		calendarBackgroundColor = c;
+	}
+	
+	public void setSelectedDayColor(Color c) {
+		selectedDayColor = c;
+	}
+
 	public Color getFrameBackgroundColor() {
 		return frameBackgroundColor;
 	}
