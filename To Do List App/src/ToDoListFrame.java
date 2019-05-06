@@ -152,9 +152,10 @@ public class ToDoListFrame extends JFrame {
 		editButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		editButton.addActionListener(event -> {
 			try {
+				ArrayList<Task> tasks = tdList.getTasksOnDay(currentDay, currentMonth, currentYear);
 				int currentSelected = taskList.getSelectedIndex();
 				Task newTask = new Task(currentDay, currentMonth, currentYear, textField.getText());
-				tdList.editTask(currentSelected, newTask);
+				tdList.editTask(tasks.get(currentSelected), newTask);
 				textField.setText("");
 			}
 			catch (Exception e) {

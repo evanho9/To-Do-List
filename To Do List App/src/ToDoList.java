@@ -32,8 +32,15 @@ public class ToDoList {
 		return tasks.get(index);
 	}
 	
-	public void editTask(int index, Task newTask) {
-		tasks.set(index, newTask);
+	public void editTask(Task currentTask, Task newTask) {
+		int currentTaskIndex = 0;
+		for(int i = 0; i < tasks.size(); i++) {
+			if(tasks.get(i).getDay() == currentTask.getDay() && tasks.get(i).getMonth() == currentTask.getMonth()
+					&& tasks.get(i).getYear() == currentTask.getYear() 
+					&& tasks.get(i).getTask().equals(currentTask.getTask()))
+					currentTaskIndex = i;
+		}
+		tasks.set(currentTaskIndex, newTask);
 	}
 	
 	public String getAllTasksInCurrentMonth(int month, int year) {
