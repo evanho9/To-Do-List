@@ -189,9 +189,11 @@ public class CalendarFrame extends JFrame {
 		forwardYear.setBorderPainted(false);
 		forwardYear.setOpaque(true);
 		forwardYear.addActionListener(event -> {
-			currentYear++;
-			refreshCalendar(currentDay, currentMonth, currentYear);
-			t.update(currentDay, currentMonth, currentYear);
+			if(currentYear != 3000) {
+				currentYear++;
+				refreshCalendar(currentDay, currentMonth, currentYear);
+				t.update(currentDay, currentMonth, currentYear);
+			}
 		});
 		
 		previousYear = new JButton("V (-1 Year)");
@@ -201,9 +203,11 @@ public class CalendarFrame extends JFrame {
 		previousYear.setBorderPainted(false);
 		previousYear.setOpaque(true);
 		previousYear.addActionListener(event -> {
-			currentYear--;
-			refreshCalendar(currentDay, currentMonth, currentYear);
-			t.update(currentDay, currentMonth, currentYear);
+			if(currentYear != 1583) {
+				currentYear--;
+				refreshCalendar(currentDay, currentMonth, currentYear);
+				t.update(currentDay, currentMonth, currentYear);
+			}
 		});
 		
 		buttonPanel.add(forwardYear);
