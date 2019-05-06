@@ -31,6 +31,6 @@ public class Task {
 	}
 	
 	public String toString() {
-		return "Task: " + task + "." + "(Day: " + day + ". Month:" + month + ". Year:" + year + ")";
+		return "Task: " + task + "." + "(Day:" + day + ". Month:" + month + ". Year:" + year + ")";
 	}
 }

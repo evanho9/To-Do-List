@@ -42,6 +42,7 @@ public class CalendarFrame extends JFrame {
 			"July", "August", "September", "October", "November", "December"};
 
 	private ArrayList<JPanel> backgrounds;
+	private ArrayList<JButton> buttons;
 	private Color textColor;
 	private Color frameBackgroundColor;
 	private Color buttonColor;
@@ -67,6 +68,7 @@ public class CalendarFrame extends JFrame {
 		t.update(currentDay, currentMonth, currentYear);
 		
 		backgrounds = new ArrayList<>();
+		buttons = new ArrayList<>();
 		initHeader();
 		initFooter();
 		initCalendarView(daysInMonth, startingDayOfMonth, currentYear);
@@ -100,6 +102,7 @@ public class CalendarFrame extends JFrame {
 		headerPanel.add(centerPanel, BorderLayout.CENTER);
 		
 		forwardMonth = new JButton("Next Month -->");
+		buttons.add(forwardMonth);
 		forwardMonth.setBackground(buttonColor);
 		forwardMonth.setFocusPainted(false);
 		forwardMonth.addActionListener(event -> {
@@ -117,6 +120,7 @@ public class CalendarFrame extends JFrame {
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
 		
 		previousMonth = new JButton("<-- Prev. Month");
+		buttons.add(previousMonth);
 		previousMonth.setFocusPainted(false);
 		previousMonth.setBackground(buttonColor);
 		previousMonth.addActionListener(event -> {
@@ -159,6 +163,7 @@ public class CalendarFrame extends JFrame {
 			if(currentYear != (int) combo.getSelectedItem()) {
 				currentYear = (int) combo.getSelectedItem();
 				refreshCalendar(currentDay, currentMonth, currentYear);
+				t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 	}
@@ -170,6 +175,7 @@ public class CalendarFrame extends JFrame {
 		buttonPanel.setBackground(frameBackgroundColor);
 		
 		forwardYear = new JButton("Λ (+1 Year)");
+		buttons.add(forwardYear);
 		forwardYear.setBackground(buttonColor);
 		forwardYear.setFocusPainted(false);
 		forwardYear.addActionListener(event -> {
@@ -179,6 +185,7 @@ public class CalendarFrame extends JFrame {
 		});
 		
 		previousYear = new JButton("V (-1 Year)");
+		buttons.add(previousYear);
 		previousYear.setBackground(buttonColor);
 		previousYear.setFocusPainted(false);
 		previousYear.addActionListener(event -> {
@@ -300,6 +307,7 @@ public class CalendarFrame extends JFrame {
 		footerPanel.add(dateLabel, BorderLayout.CENTER);
 		
 		JButton settingsButton = new JButton("Settings");
+		buttons.add(settingsButton);
 		settingsButton.setBackground(buttonColor);
 		settingsButton.setFocusPainted(false);
 		settingsButton.addActionListener(event -> {
@@ -435,35 +443,29 @@ public class CalendarFrame extends JFrame {
 		for (JPanel p : backgrounds) {
 			p.setBackground(color);
 		} 
-		if(color.equals(Color.BLACK)) {
-			previousMonth.setBorderPainted(false);
-			previousMonth.setOpaque(true);
-			previousMonth.setBackground(Color.BLACK);
-			previousMonth.setForeground(Color.WHITE);
-			
-			forwardMonth.setBorderPainted(false);
-			forwardMonth.setOpaque(true);
-			forwardMonth.setBackground(Color.BLACK);
-			forwardMonth.setForeground(Color.WHITE);
-			
-			forwardYear.setBorderPainted(false);
-			forwardYear.setOpaque(true);
-			forwardYear.setBackground(Color.BLACK);
-			forwardYear.setForeground(Color.WHITE);
-
-			
-			previousYear.setBorderPainted(false);
-			previousYear.setOpaque(true);
-			previousYear.setBackground(Color.BLACK);
-			previousYear.setForeground(Color.WHITE);
-			
 		
-			//yearSelector.setBackground(Color.BLACK);
-			//yearSelector.setForeground(Color.WHITE);
-
+		if(color.equals(Color.BLACK)) {
+			for(JButton b : buttons) {
+				b.setBorderPainted(false);
+				b.setOpaque(true);
+				b.setBackground(color);
+				b.setForeground(Color.WHITE);
+			}
+			monthLabel.setForeground(Color.WHITE);
+			dateLabel.setForeground(Color.WHITE);
 		}
+		else {
+			for(JButton b : buttons) {
+				b.setBorderPainted(false);
+				b.setOpaque(true);
+				b.setBackground(color);
+				b.setForeground(Color.BLACK);
+			}
+			monthLabel.setForeground(Color.BLACK);
+			dateLabel.setForeground(Color.BLACK);
+		}
+	
 		setBackground(color);
-
 	}
 	
 	
