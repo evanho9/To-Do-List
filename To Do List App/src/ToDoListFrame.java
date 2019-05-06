@@ -241,21 +241,6 @@ public class ToDoListFrame extends JFrame {
 		taskScrollPane.repaint();
 	}
 	
-	public void selectedTask() {
-		boolean running = true;
-		while (running) {
-			try {
-				int currentSelected = taskList.getSelectedIndex();
-				String currentTask = tdList.getTaskAtIndex(currentSelected).getTask();
-				textField.setText(currentTask);
-				update(currentDay, currentMonth,currentYear);
-				}
-			catch (Exception e) {
-				//If nothing is selected don't throw an error.
-			}
-		}
-	}
-	
 	private String getMonth(int index) {
 		return months[index-1];
 	}

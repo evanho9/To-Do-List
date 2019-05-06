@@ -108,16 +108,18 @@ public class CalendarFrame extends JFrame {
 		forwardMonth.setBorderPainted(false);
 		forwardMonth.setOpaque(true);
 		forwardMonth.addActionListener(event -> {
-			if (currentMonth == 12) {
-				currentMonth = 1;
-				currentYear++;
-				currentDay = 1;
-			} else {
-				currentMonth++;
-				currentDay = 1;
+			if (!(currentYear == 3000 && currentMonth == 12)) {
+				if (currentMonth == 12) {
+					currentMonth = 1;
+					currentYear++;
+					currentDay = 1;
+				} else {
+					currentMonth++;
+					currentDay = 1;
+				}
+				refreshCalendar(currentDay, currentMonth, currentYear);
+				t.update(currentDay, currentMonth, currentYear);
 			}
-			refreshCalendar(currentDay, currentMonth, currentYear);
-			t.update(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
 		
@@ -128,16 +130,18 @@ public class CalendarFrame extends JFrame {
 		previousMonth.setBorderPainted(false);
 		previousMonth.setOpaque(true);
 		previousMonth.addActionListener(event -> {
-			if (currentMonth == 1) {
-				currentMonth = 12;
-				currentYear--;
-				currentDay = 1;
-			} else {
-				currentMonth--;
-				currentDay = 1;
+			if (!(currentYear == 1583 && currentMonth == 1)) {
+				if (currentMonth == 1 && currentYear != 1583) {
+					currentMonth = 12;
+					currentYear--;
+					currentDay = 1;
+				} else {
+					currentMonth--;
+					currentDay = 1;
+				}
+				refreshCalendar(currentDay, currentMonth, currentYear);
+				t.update(currentDay, currentMonth, currentYear);
 			}
-			refreshCalendar(currentDay, currentMonth, currentYear);
-			t.update(currentDay, currentMonth, currentYear);
 		});
 		headerPanel.add(previousMonth, BorderLayout.WEST);
 		
