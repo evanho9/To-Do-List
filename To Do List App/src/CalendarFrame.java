@@ -327,6 +327,7 @@ public class CalendarFrame extends JFrame {
 		buttons.add(settingsButton);
 		settingsButton.setBackground(buttonColor);
 		settingsButton.setFocusPainted(false);
+		settingsButton.setBorderPainted(false);
 		settingsButton.addActionListener(event -> {
 			SettingsFrame settingsFrame = new SettingsFrame(this, t, FRAME_DIMENSION);
 		});
