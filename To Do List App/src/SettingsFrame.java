@@ -35,6 +35,7 @@ public class SettingsFrame extends JFrame {
 		initFrame();
 		initMainPanel();
 		endOperations();
+		changeColor(Color.WHITE);
 	}
 
 	private void initFrame() {
@@ -50,6 +51,7 @@ public class SettingsFrame extends JFrame {
 		JButton lightTheme = new JButton("Light Theme");
 		lightTheme.setBorderPainted(false);
 		buttons.add(lightTheme);
+		lightTheme.setBorderPainted(false);
 		lightTheme.addActionListener(event -> {
 			Color c = Color.WHITE;
 			tdFrame.setFrameBackgroundColor(c);
