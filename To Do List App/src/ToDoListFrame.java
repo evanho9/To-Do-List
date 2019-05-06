@@ -133,8 +133,9 @@ public class ToDoListFrame extends JFrame {
 		deleteButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		deleteButton.addActionListener(event -> {
 			try {
+				ArrayList<Task> tasks = tdList.getTasksOnDay(currentDay, currentMonth, currentYear);
 				int currentSelected = taskList.getSelectedIndex();
-				tdList.removeTask(currentSelected);
+				tdList.removeTask(tasks.get(currentSelected));
 			}
 			catch (Exception e) {
 				//If nothing selected don't throw any errors.

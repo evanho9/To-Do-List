@@ -24,8 +24,8 @@ public class ToDoList {
 		return result;
 	}
 	
-	public void removeTask(int index) {
-		tasks.remove(index);
+	public void removeTask(Task task) {
+		tasks.remove(task);
 	}
 	
 	public Task getTaskAtIndex(int index) {
