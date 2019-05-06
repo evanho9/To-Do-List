@@ -83,9 +83,9 @@ public class CalendarFrame extends JFrame {
 	
 	private void initColors() {
 		textColor = Color.BLACK;
-		frameBackgroundColor = Color.GRAY;
-		buttonColor = Color.WHITE;
-		calendarBackgroundColor = Color.LIGHT_GRAY;
+		frameBackgroundColor = Color.LIGHT_GRAY;
+		buttonColor = Color.LIGHT_GRAY;
+		calendarBackgroundColor = new Color(240, 240, 240);
 		selectedDayColor = Color.MAGENTA;
 	}
 
@@ -105,6 +105,8 @@ public class CalendarFrame extends JFrame {
 		buttons.add(forwardMonth);
 		forwardMonth.setBackground(buttonColor);
 		forwardMonth.setFocusPainted(false);
+		forwardMonth.setBorderPainted(false);
+		forwardMonth.setOpaque(true);
 		forwardMonth.addActionListener(event -> {
 			if (currentMonth == 12) {
 				currentMonth = 1;
@@ -123,6 +125,8 @@ public class CalendarFrame extends JFrame {
 		buttons.add(previousMonth);
 		previousMonth.setFocusPainted(false);
 		previousMonth.setBackground(buttonColor);
+		previousMonth.setBorderPainted(false);
+		previousMonth.setOpaque(true);
 		previousMonth.addActionListener(event -> {
 			if (currentMonth == 1) {
 				currentMonth = 12;
@@ -148,11 +152,11 @@ public class CalendarFrame extends JFrame {
 		centerPanel.setBackground(frameBackgroundColor);
 		
 		monthLabel = new JLabel(getMonth(currentMonth));
-		monthLabel.setForeground(Color.WHITE);
+		monthLabel.setForeground(textColor);
 		centerPanel.add(monthLabel);
 		
 		yearSelector = new JComboBox<>();
-		yearSelector.setBackground(buttonColor);
+		yearSelector.setBackground(calendarBackgroundColor);
 		for(int i = 1583; i <= 3000; i++) {
 			yearSelector.addItem(i);
 		}
@@ -178,6 +182,8 @@ public class CalendarFrame extends JFrame {
 		buttons.add(forwardYear);
 		forwardYear.setBackground(buttonColor);
 		forwardYear.setFocusPainted(false);
+		forwardYear.setBorderPainted(false);
+		forwardYear.setOpaque(true);
 		forwardYear.addActionListener(event -> {
 			currentYear++;
 			refreshCalendar(currentDay, currentMonth, currentYear);
@@ -188,6 +194,8 @@ public class CalendarFrame extends JFrame {
 		buttons.add(previousYear);
 		previousYear.setBackground(buttonColor);
 		previousYear.setFocusPainted(false);
+		previousYear.setBorderPainted(false);
+		previousYear.setOpaque(true);
 		previousYear.addActionListener(event -> {
 			currentYear--;
 			refreshCalendar(currentDay, currentMonth, currentYear);
@@ -260,7 +268,7 @@ public class CalendarFrame extends JFrame {
 			} else if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
 				JButton dayButton = new JButton(Integer.toString(dayNumber));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
-				dayButton.setBackground(buttonColor);
+				dayButton.setBackground(Color.WHITE);
 				dayButton.setBorderPainted(false);
 				dayButton.setFocusPainted(false);
 				dayButton.setOpaque(true);
@@ -303,6 +311,7 @@ public class CalendarFrame extends JFrame {
 		dateLabel = new JLabel("Date: ");
 		dateLabel.setForeground(buttonColor);
 		dateLabel.setHorizontalAlignment(JLabel.CENTER);
+		dateLabel.setForeground(textColor);
 		
 		footerPanel.add(dateLabel, BorderLayout.CENTER);
 		
@@ -395,7 +404,7 @@ public class CalendarFrame extends JFrame {
 			} else if (dayNumber < daysInMonth && i >= startingDayOfMonth) {
 				JButton dayButton = new JButton(Integer.toString(dayNumber));
 				int currentDayOfButton = Integer.parseInt(dayButton.getText());
-				dayButton.setBackground(buttonColor);
+				dayButton.setBackground(Color.WHITE);
 				dayButton.setBorderPainted(false);
 				dayButton.setFocusPainted(false);
 				dayButton.setOpaque(true);
@@ -440,11 +449,10 @@ public class CalendarFrame extends JFrame {
 	}
 	
 	public void setFrameBackgroundColor(Color color) {
-		for (JPanel p : backgrounds) {
-			p.setBackground(color);
-		} 
-		
 		if(color.equals(Color.BLACK)) {
+			for (JPanel p : backgrounds) {
+				p.setBackground(color);
+			} 
 			for(JButton b : buttons) {
 				b.setBorderPainted(false);
 				b.setOpaque(true);
@@ -455,10 +463,13 @@ public class CalendarFrame extends JFrame {
 			dateLabel.setForeground(Color.WHITE);
 		}
 		else {
+			for (JPanel p : backgrounds) {
+				p.setBackground(Color.LIGHT_GRAY);
+			} 
 			for(JButton b : buttons) {
 				b.setBorderPainted(false);
 				b.setOpaque(true);
-				b.setBackground(color);
+				b.setBackground(Color.LIGHT_GRAY);
 				b.setForeground(Color.BLACK);
 			}
 			monthLabel.setForeground(Color.BLACK);

@@ -18,7 +18,6 @@ public class ToDoList {
 	public ArrayList<Task> getTasksOnDay(int day, int month, int year) {
 		ArrayList<Task> result = new ArrayList<>();
 		for(Task t : tasks) {
-			System.out.println(t);
 			if(t.getDay() == day && t.getMonth() == month && t.getYear() == year)
 				result.add(t);
 		}

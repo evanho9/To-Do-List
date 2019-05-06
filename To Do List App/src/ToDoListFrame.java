@@ -77,8 +77,8 @@ public class ToDoListFrame extends JFrame {
 	
 	private void initColors() {
 		textColor = Color.BLACK;
-		frameBackgroundColor = Color.GRAY;
-		buttonColor = Color.WHITE;
+		frameBackgroundColor = Color.LIGHT_GRAY;
+		buttonColor = Color.LIGHT_GRAY;
 	}
 
 	private void initHeader() {
@@ -90,7 +90,7 @@ public class ToDoListFrame extends JFrame {
 		dateLabel = new JLabel("Date: ");
 		dateLabel.setText("Date: " + (currentMonth) + "/" 
 				+ (currentDay) + "/" + (currentYear));
-		dateLabel.setForeground(buttonColor);
+		dateLabel.setForeground(textColor);
 		
 		headerPanel.add(dateLabel);
 		headerPanel.setPreferredSize(new Dimension(FRAME_DIMENSION.width-50, FRAME_DIMENSION.height/15));
@@ -128,6 +128,8 @@ public class ToDoListFrame extends JFrame {
 		deleteButton = new JButton("Delete");
 		buttons.add(deleteButton);
 		deleteButton.setBackground(buttonColor);
+		deleteButton.setBorderPainted(false);
+		deleteButton.setOpaque(true);
 		deleteButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		deleteButton.addActionListener(event -> {
 			try {
@@ -144,6 +146,8 @@ public class ToDoListFrame extends JFrame {
 		editButton = new JButton("Edit");
 		buttons.add(editButton);
 		editButton.setBackground(buttonColor);
+		editButton.setBorderPainted(false);
+		editButton.setOpaque(true);
 		editButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		editButton.addActionListener(event -> {
 			try {
@@ -162,6 +166,8 @@ public class ToDoListFrame extends JFrame {
 		addButton = new JButton("Add");
 		buttons.add(addButton);
 		addButton.setBackground(buttonColor);
+		addButton.setBorderPainted(false);
+		addButton.setOpaque(true);
 		addButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		addButton.addActionListener(event -> {
 			if(textField.getText().equals("")) {
@@ -177,6 +183,8 @@ public class ToDoListFrame extends JFrame {
 		exportButton = new JButton("Export");
 		buttons.add(exportButton);
 		exportButton.setBackground(buttonColor);
+		exportButton.setBorderPainted(false);
+		exportButton.setOpaque(true);
 		exportButton.setPreferredSize(new Dimension(FRAME_DIMENSION.width/5, FRAME_DIMENSION.height/10));
 		exportButton.addActionListener(event -> {
 			exportThisMonth();
@@ -239,7 +247,6 @@ public class ToDoListFrame extends JFrame {
 			try {
 				int currentSelected = taskList.getSelectedIndex();
 				String currentTask = tdList.getTaskAtIndex(currentSelected).getTask();
-				System.out.println("Currently selected : " + currentTask);
 				textField.setText(currentTask);
 				update(currentDay, currentMonth,currentYear);
 				}
@@ -267,12 +274,11 @@ public class ToDoListFrame extends JFrame {
 	     
 	}
 	
-	public void setFrameBackgroundColor(Color color) {
-		for (JPanel p : backgrounds) {
-			p.setBackground(color);
-		}
-		
+	public void setFrameBackgroundColor(Color color) {	
 		if(color.equals(Color.BLACK)) {
+			for (JPanel p : backgrounds) {
+				p.setBackground(color);
+			}
 			dateLabel.setForeground(Color.WHITE);
 			for(JButton b : buttons) {
 				b.setBorderPainted(false);
@@ -287,11 +293,14 @@ public class ToDoListFrame extends JFrame {
 			textField.setForeground(Color.WHITE);
 		}
 		else {
+			for (JPanel p : backgrounds) {
+				p.setBackground(Color.LIGHT_GRAY);
+			}
 			dateLabel.setForeground(Color.BLACK);
 			for(JButton b : buttons) {
 				b.setBorderPainted(false);
 				b.setOpaque(true);
-				b.setBackground(color);
+				b.setBackground(Color.LIGHT_GRAY);
 				b.setForeground(Color.BLACK);
 			}
 			taskScrollPane.getViewport().getView().setBackground(color);

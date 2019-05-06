@@ -52,7 +52,6 @@ public class SettingsFrame extends JFrame {
 		lightTheme.addActionListener(event -> {
 			Color c = Color.WHITE;
 			tdFrame.setFrameBackgroundColor(c);
-			System.out.println("light theme pressed");
 			cFrame.setFrameBackgroundColor(c);
 			changeColor(c);
 		});
@@ -63,8 +62,6 @@ public class SettingsFrame extends JFrame {
 		darkTheme.addActionListener(event -> {
 			Color c = Color.BLACK;
 			tdFrame.setFrameBackgroundColor(c);
-			System.out.println(Arrays.toString(cFrame.getComponents()));
-			System.out.println("dark theme pressed");
 			cFrame.setFrameBackgroundColor(c);
 			changeColor(c);
 		});
