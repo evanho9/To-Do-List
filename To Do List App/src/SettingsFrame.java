@@ -48,6 +48,7 @@ public class SettingsFrame extends JFrame {
 		backgrounds.add(mainPanel);
 		
 		JButton lightTheme = new JButton("Light Theme");
+		lightTheme.setBorderPainted(false);
 		buttons.add(lightTheme);
 		lightTheme.addActionListener(event -> {
 			Color c = Color.WHITE;
@@ -58,6 +59,7 @@ public class SettingsFrame extends JFrame {
 		mainPanel.add(lightTheme);
 
 		JButton darkTheme = new JButton("Dark Theme");
+		darkTheme.setBorderPainted(false);
 		buttons.add(darkTheme);
 		darkTheme.addActionListener(event -> {
 			Color c = Color.BLACK;
