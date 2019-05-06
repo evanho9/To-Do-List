@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Window;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,16 +43,17 @@ public class SettingsFrame extends JFrame {
 		lightTheme.addActionListener(event -> {
 			Color c = Color.WHITE;
 			tdFrame.setFrameBackgroundColor(c);
-			System.out.print("light theme pressed");
+			System.out.println("light theme pressed");
 			cFrame.setFrameBackgroundColor(c);
 		});
 		mainPanel.add(lightTheme);
 		
 		JButton darkTheme = new JButton("Dark Theme");
 		darkTheme.addActionListener(event -> {
-			Color c = Color.GRAY;
+			Color c = Color.BLACK;
 			tdFrame.setFrameBackgroundColor(c);
-			System.out.print("dark theme pressed");
+			System.out.println(Arrays.toString(cFrame.getComponents()));
+			System.out.println("dark theme pressed");
 			cFrame.setFrameBackgroundColor(c);
 		});
 		mainPanel.add(darkTheme);

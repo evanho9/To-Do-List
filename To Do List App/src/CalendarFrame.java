@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -29,7 +30,7 @@ public class CalendarFrame extends JFrame {
 	
 	private JPanel headerPanel, mainPanel, footerPanel, centerPanel, buttonPanel;
 	private JLabel dateLabel, monthLabel;
-	private JButton selected, forwardMonth, previousMonth;
+	private JButton selected, forwardMonth, previousMonth, forwardYear, previousYear;
 	private JComboBox<Integer> yearSelector;
 	
 	private final Dimension FRAME_DIMENSION;
@@ -143,6 +144,7 @@ public class CalendarFrame extends JFrame {
 		centerPanel.setBackground(frameBackgroundColor);
 		
 		monthLabel = new JLabel(getMonth(currentMonth));
+		monthLabel.setForeground(Color.WHITE);
 		centerPanel.add(monthLabel);
 		
 		yearSelector = new JComboBox<>();
@@ -167,20 +169,22 @@ public class CalendarFrame extends JFrame {
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 		buttonPanel.setBackground(frameBackgroundColor);
 		
-		JButton forwardYear = new JButton("Λ (+1 Year)");
+		forwardYear = new JButton("Λ (+1 Year)");
 		forwardYear.setBackground(buttonColor);
 		forwardYear.setFocusPainted(false);
 		forwardYear.addActionListener(event -> {
 			currentYear++;
 			refreshCalendar(currentDay, currentMonth, currentYear);
+			t.update(currentDay, currentMonth, currentYear);
 		});
 		
-		JButton previousYear = new JButton("V (-1 Year)");
+		previousYear = new JButton("V (-1 Year)");
 		previousYear.setBackground(buttonColor);
 		previousYear.setFocusPainted(false);
 		previousYear.addActionListener(event -> {
 			currentYear--;
 			refreshCalendar(currentDay, currentMonth, currentYear);
+			t.update(currentDay, currentMonth, currentYear);
 		});
 		
 		buttonPanel.add(forwardYear);
@@ -431,6 +435,33 @@ public class CalendarFrame extends JFrame {
 		for (JPanel p : backgrounds) {
 			p.setBackground(color);
 		} 
+		if(color.equals(Color.BLACK)) {
+			previousMonth.setBorderPainted(false);
+			previousMonth.setOpaque(true);
+			previousMonth.setBackground(Color.BLACK);
+			previousMonth.setForeground(Color.WHITE);
+			
+			forwardMonth.setBorderPainted(false);
+			forwardMonth.setOpaque(true);
+			forwardMonth.setBackground(Color.BLACK);
+			forwardMonth.setForeground(Color.WHITE);
+			
+			forwardYear.setBorderPainted(false);
+			forwardYear.setOpaque(true);
+			forwardYear.setBackground(Color.BLACK);
+			forwardYear.setForeground(Color.WHITE);
+
+			
+			previousYear.setBorderPainted(false);
+			previousYear.setOpaque(true);
+			previousYear.setBackground(Color.BLACK);
+			previousYear.setForeground(Color.WHITE);
+			
+		
+			//yearSelector.setBackground(Color.BLACK);
+			//yearSelector.setForeground(Color.WHITE);
+
+		}
 		setBackground(color);
 
 	}
