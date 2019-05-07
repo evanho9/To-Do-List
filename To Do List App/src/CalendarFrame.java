@@ -158,7 +158,6 @@ public class CalendarFrame extends JFrame {
 		monthButton.setBorderPainted(false);
 		monthButton.setOpaque(true);
 		monthButton.addActionListener(event -> {
-			System.out.println("month button pressed.");
 			CurrentMonthToDo cmtd = new CurrentMonthToDo(t.getToDoList(), currentMonth, currentYear);
 		});
 		centerPanel.add(monthButton);
