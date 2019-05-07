@@ -303,4 +303,8 @@ public class ToDoListFrame extends JFrame {
 
 	}
 	
+	public ToDoList getToDoList() {
+		return tdList;
+	}
+	
 }

@@ -30,7 +30,7 @@ public class CalendarFrame extends JFrame {
 	
 	private JPanel headerPanel, mainPanel, footerPanel, centerPanel, buttonPanel;
 	private JLabel dateLabel, monthLabel;
-	private JButton selected, forwardMonth, previousMonth, forwardYear, previousYear;
+	private JButton selected, forwardMonth, previousMonth, forwardYear, previousYear, monthButton;
 	private JComboBox<Integer> yearSelector;
 	
 	private final Dimension FRAME_DIMENSION;
@@ -118,7 +118,7 @@ public class CalendarFrame extends JFrame {
 					currentDay = 1;
 				}
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				t.update(currentDay, currentMonth, currentYear);
+				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
@@ -140,7 +140,7 @@ public class CalendarFrame extends JFrame {
 					currentDay = 1;
 				}
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				t.update(currentDay, currentMonth, currentYear);
+				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 		headerPanel.add(previousMonth, BorderLayout.WEST);
@@ -157,7 +157,19 @@ public class CalendarFrame extends JFrame {
 		
 		monthLabel = new JLabel(getMonth(currentMonth));
 		monthLabel.setForeground(textColor);
-		centerPanel.add(monthLabel);
+		//centerPanel.add(monthLabel);
+		
+		monthButton = new JButton(getMonth(currentMonth));
+		buttons.add(monthButton);
+		monthButton.setBackground(buttonColor);
+		monthButton.setFocusPainted(false);
+		monthButton.setBorderPainted(false);
+		monthButton.setOpaque(true);
+		monthButton.addActionListener(event -> {
+			System.out.println("month button pressed.");
+			CurrentMonthToDo cmtd = new CurrentMonthToDo(t.getToDoList(), currentMonth, currentYear);
+		});
+		centerPanel.add(monthButton);
 		
 		yearSelector = new JComboBox<>();
 		yearSelector.setBackground(calendarBackgroundColor);
@@ -171,7 +183,7 @@ public class CalendarFrame extends JFrame {
 			if(currentYear != (int) combo.getSelectedItem()) {
 				currentYear = (int) combo.getSelectedItem();
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				t.update(currentDay, currentMonth, currentYear);
+				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 	}
@@ -192,7 +204,7 @@ public class CalendarFrame extends JFrame {
 			if(currentYear != 3000) {
 				currentYear++;
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				t.update(currentDay, currentMonth, currentYear);
+				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 		
@@ -206,7 +218,7 @@ public class CalendarFrame extends JFrame {
 			if(currentYear != 1583) {
 				currentYear--;
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				t.update(currentDay, currentMonth, currentYear);
+				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 		
@@ -307,6 +319,7 @@ public class CalendarFrame extends JFrame {
 		add(mainPanel, BorderLayout.CENTER);
 		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
 		monthLabel.setText(getMonth(currentMonth));
+		monthButton.setText(getMonth(currentMonth));
 		yearSelector.setSelectedItem(currentYear);
 	}
 	
@@ -443,6 +456,7 @@ public class CalendarFrame extends JFrame {
 		}
 		dateLabel.setText("Date: " + (currentMonth) + "/" + (currentDay) + "/" + (currentYear));
 		monthLabel.setText(getMonth(currentMonth));
+		monthButton.setText(getMonth(currentMonth));
 		yearSelector.setSelectedItem(currentYear);
 		mainPanel.repaint();
 	}

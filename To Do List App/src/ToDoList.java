@@ -53,4 +53,14 @@ public class ToDoList {
 		return result;
 		
 	}
+	public ArrayList<Task> getAllTasksInCurrentMonthInArrayList(int month, int year) {
+		ArrayList<Task> result = new ArrayList<>();
+		for(Task t : tasks) {
+			if(t.getMonth() == month && t.getYear() == year)
+				result.add(t);
+		}
+		
+		return result;
+		
+	}
 }
