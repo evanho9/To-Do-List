@@ -3,26 +3,17 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -36,6 +27,8 @@ public class CalendarFrame extends JFrame {
 	private final Dimension FRAME_DIMENSION;
 	
 	private ToDoListFrame t;
+	
+	private SettingsFrame settingsFrame;
 	
 	private int currentYear, currentMonth, currentDay;	
 	private String[] months = {"January", "February", "March", "April", "May", "June",
@@ -66,6 +59,8 @@ public class CalendarFrame extends JFrame {
 		
 		t = new ToDoListFrame(realDay, realMonth, realYear, FRAME_DIMENSION);
 		t.update(currentDay, currentMonth, currentYear);
+		
+		settingsFrame = new SettingsFrame(this, t, FRAME_DIMENSION);
 		
 		backgrounds = new ArrayList<>();
 		buttons = new ArrayList<>();
@@ -118,7 +113,6 @@ public class CalendarFrame extends JFrame {
 					currentDay = 1;
 				}
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 		headerPanel.add(forwardMonth, BorderLayout.EAST);
@@ -140,7 +134,6 @@ public class CalendarFrame extends JFrame {
 					currentDay = 1;
 				}
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 		headerPanel.add(previousMonth, BorderLayout.WEST);
@@ -157,7 +150,6 @@ public class CalendarFrame extends JFrame {
 		
 		monthLabel = new JLabel(getMonth(currentMonth));
 		monthLabel.setForeground(textColor);
-		//centerPanel.add(monthLabel);
 		
 		monthButton = new JButton(getMonth(currentMonth));
 		buttons.add(monthButton);
@@ -183,7 +175,6 @@ public class CalendarFrame extends JFrame {
 			if(currentYear != (int) combo.getSelectedItem()) {
 				currentYear = (int) combo.getSelectedItem();
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 	}
@@ -204,7 +195,6 @@ public class CalendarFrame extends JFrame {
 			if(currentYear != 3000) {
 				currentYear++;
 				refreshCalendar(currentDay, currentMonth, currentYear);
-				//t.update(currentDay, currentMonth, currentYear);
 			}
 		});
 		
@@ -342,7 +332,7 @@ public class CalendarFrame extends JFrame {
 		settingsButton.setFocusPainted(false);
 		settingsButton.setBorderPainted(false);
 		settingsButton.addActionListener(event -> {
-			SettingsFrame settingsFrame = new SettingsFrame(this, t, FRAME_DIMENSION);
+			settingsFrame.setVisible(true);
 		});
 		footerPanel.add(settingsButton, BorderLayout.EAST);
 		

@@ -1,17 +1,11 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridLayout;
-import java.awt.Window;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 
 public class SettingsFrame extends JFrame {
 
@@ -83,7 +77,7 @@ public class SettingsFrame extends JFrame {
 		}
 		pack();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setVisible(true);
+		setVisible(false);
 	}
 
 	private void changeColor(Color c) {

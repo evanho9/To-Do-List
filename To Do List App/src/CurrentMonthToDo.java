@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -66,11 +67,16 @@ public class CurrentMonthToDo extends JFrame {
 	}
 	
 	private void endOperations() {
+		try {
+			ImageIcon imageIcon = new ImageIcon("icon.png");
+			setIconImage(imageIcon.getImage());
+		} catch (Exception e) {
+			System.out.println("Icon image not found.");
+		}
 		pack();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
-	
 	
 	private String getMonth(int index) {
 		return months[index-1];
