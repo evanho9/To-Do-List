@@ -73,7 +73,7 @@ public class CalendarFrame extends JFrame {
 	private void initFrame() {
 		setPreferredSize(new Dimension(FRAME_DIMENSION));
 		setLayout(new BorderLayout());
-		setTitle("Calendar Frame");
+		setTitle("Calendar");
 	}
 	
 	private void initColors() {
