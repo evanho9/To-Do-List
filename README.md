@@ -1,4 +1,4 @@
-# To-do List App
+# To-Do List App
 To-do list application and calendar.
 
 Features:
